@@ -1,0 +1,173 @@
+SYNTHETIC DOCUMENT DATASET — MASTER GROUND TRUTH REFERENCE
+Agentic RAG System for Automated Document Intelligence in Supply Chain Operations
+Victor Chukwudi Robinson | MSc AI & Data Science | University of East London
+
+Total: 20 document sets | 56 PDF files
+5 distinct supplier formats used throughout for realistic format variation:
+  - Meridian Vehicle Parts Co.   — formal corporate, bordered tables
+  - Castlegate Fuel Systems Ltd  — modern minimal, no heavy borders
+  - Northgate Tyre Solutions     — prose/letter style, no tables
+  - Vantage Electrical Components Ltd — pipe-delimited spreadsheet export
+  - Coastal Fleet Supplies Ltd   — informal, lowercase, small-supplier style
+
+================================================================================
+CATEGORY 1 — CLEAN / CONSISTENT (5 sets, 15 PDFs)
+================================================================================
+No anomalies present. All PO/Invoice/Delivery values match exactly.
+
+Set 01 | Meridian   | PO-2026-1001 | VP-204, VP-311           | CONSISTENT
+Set 02 | Castlegate  | PO-2026-1002 | FS-118, FS-220           | CONSISTENT
+Set 03 | Northgate   | PO-2026-1003 | TY-440                  | CONSISTENT
+Set 04 | Vantage     | PO-2026-1004 | EC-902, EC-150           | CONSISTENT
+Set 05 | Coastal     | PO-2026-1005 | FL-077, FL-310           | CONSISTENT
+
+
+================================================================================
+CATEGORY 2 — PRICE MISMATCH (3 sets, 9 PDFs)
+================================================================================
+Invoice unit price differs from the price agreed on the Purchase Order.
+
+Set 06 | Meridian   | PO-2026-2001 | VP-204
+  PO price: £42.00/unit  |  Invoice price: £46.50/unit
+  Qty: 40 units  |  Overcharge: £180.00 total
+
+Set 07 | Castlegate | PO-2026-2002 | FS-118
+  PO price: £165.00/unit |  Invoice price: £178.00/unit
+  Qty: 10 units  |  Overcharge: £130.00 total
+
+Set 08 | Northgate  | PO-2026-2003 | TY-440
+  PO price: £210.00/unit |  Invoice price: £225.00/unit
+  Qty: 20 units  |  Overcharge: £300.00 total
+
+
+================================================================================
+CATEGORY 3 — QUANTITY MISMATCH (3 sets, 9 PDFs)
+================================================================================
+Quantity delivered differs from quantity ordered/invoiced.
+
+Set 09 | Vantage    | PO-2026-2004 | EC-902
+  Ordered/Invoiced: 18 units  |  Delivered: 15 units
+  Type: UNDER-delivery (3 short)
+
+Set 10 | Coastal    | PO-2026-2005 | FL-077
+  Ordered/Invoiced: 60 units  |  Delivered: 50 units
+  Type: UNDER-delivery (10 short, backorder noted in delivery note)
+
+Set 11 | Meridian   | PO-2026-2006 | VP-311
+  Ordered/Invoiced: 100 units  |  Delivered: 110 units
+  Type: OVER-delivery (10 excess)
+
+
+================================================================================
+CATEGORY 4 — MISSING DOCUMENT (3 sets, 6 PDFs — 2 docs per set by design)
+================================================================================
+One of the three expected documents is entirely absent.
+
+Set 12 | Meridian   | PO-2026-2007 | VP-204
+  Present: PO, Invoice  |  MISSING: Delivery Note
+  Scenario: Goods invoiced but receipt never confirmed
+
+Set 13 | Castlegate | PO-2026-2008 | FS-220
+  Present: PO, Delivery Note  |  MISSING: Invoice
+  Scenario: Goods received but never formally billed
+
+Set 14 | Vantage    | (none — see note) | EC-150
+  Present: Invoice, Delivery Note  |  MISSING: Purchase Order
+  Scenario: Off-contract/unauthorised purchase (most serious flag —
+  no PO reference exists; invoice shows PO_REF|NOT_PROVIDED)
+
+
+================================================================================
+CATEGORY 5 — DATE INCONSISTENCY (3 sets, 9 PDFs)
+================================================================================
+Dates that are logically impossible or inconsistent.
+
+Set 15 | Northgate  | PO-2026-2009 | TY-440
+  PO issued: 20 April 2026
+  Delivery date: 15 April 2026 (5 days BEFORE the PO was issued)
+  Type: Cross-document sequencing error (delivery precedes order)
+
+Set 16 | Coastal    | PO-2026-2010 | FL-310
+  PO issued: 22/4/26
+  Invoice date: 18/4/26 (4 days BEFORE the PO was issued)
+  Type: Cross-document sequencing error (invoice precedes order)
+
+Set 17 | Vantage    | PO-2026-2011 | EC-902
+  Invoice date: 2026-05-02
+  Due date: 2026-04-28 (due date BEFORE invoice date — 4 days earlier)
+  Type: Internal document logic error (single-document, not cross-document)
+
+
+================================================================================
+CATEGORY 6 — MULTIPLE ERRORS (3 sets, 8 PDFs)
+================================================================================
+Combinations of 2-3 discrepancy types in a single set — hardest test case.
+
+Set 18 | Meridian   | PO-2026-2012 | VP-204
+  ERROR 1 (Price):    PO £42.00/unit → Invoice £45.00/unit
+  ERROR 2 (Quantity): Ordered 30 → Delivered 26 (4 short)
+  Combination: Price + Quantity
+
+Set 19 | Castlegate | PO-2026-2013 | FS-118
+  ERROR 1 (Missing):  Invoice entirely absent
+  ERROR 2 (Date):     PO issued 10 May, but delivery dated 6 May
+                       (4 days BEFORE the PO was issued)
+  Combination: Missing Document + Date Inconsistency
+
+Set 20 | Coastal     | PO-2026-2014 | FL-077
+  ERROR 1 (Date):     PO issued 12/5/26, Invoice dated 9/5/26
+                       (3 days BEFORE the PO)
+  ERROR 2 (Price):    PO £18.00/unit → Invoice £20.00/unit
+  ERROR 3 (Quantity): Ordered/Invoiced 40 → Delivered 35 (5 short)
+  Combination: Date + Price + Quantity (triple combination)
+
+
+================================================================================
+SUMMARY TABLE FOR EVALUATION SCRIPTING
+================================================================================
+
+Set | Category           | Style       | Errors Present
+----|---------------------|-------------|------------------------------
+01  | Clean               | Meridian    | None
+02  | Clean               | Castlegate  | None
+03  | Clean               | Northgate   | None
+04  | Clean               | Vantage     | None
+05  | Clean               | Coastal     | None
+06  | Price Mismatch      | Meridian    | Price
+07  | Price Mismatch      | Castlegate  | Price
+08  | Price Mismatch      | Northgate   | Price
+09  | Quantity Mismatch   | Vantage     | Quantity
+10  | Quantity Mismatch   | Coastal     | Quantity
+11  | Quantity Mismatch   | Meridian    | Quantity
+12  | Missing Document    | Meridian    | Missing (Delivery Note)
+13  | Missing Document    | Castlegate  | Missing (Invoice)
+14  | Missing Document    | Vantage     | Missing (Purchase Order)
+15  | Date Inconsistency  | Northgate   | Date (delivery before PO)
+16  | Date Inconsistency  | Coastal     | Date (invoice before PO)
+17  | Date Inconsistency  | Vantage     | Date (due before invoice)
+18  | Multiple Errors     | Meridian    | Price + Quantity
+19  | Multiple Errors     | Castlegate  | Missing + Date
+20  | Multiple Errors     | Coastal     | Date + Price + Quantity
+
+================================================================================
+NOTES FOR DISSERTATION METHODOLOGY SECTION
+================================================================================
+
+1. Documents were generated programmatically using Python (ReportLab) to
+   ensure systematic variation and full reproducibility.
+
+2. Five distinct visual/structural formats were used across suppliers to
+   test document ingestion robustness under realistic format variation —
+   mirroring how real-world suppliers each use their own invoice templates,
+   rather than assuming a single standardised format.
+
+3. Ground truth labels were assigned at creation time, enabling precise,
+   objective evaluation of the agentic RAG system's anomaly detection
+   accuracy, false positive rate, and retrieval accuracy against a
+   known-correct answer key.
+
+4. The dataset deliberately balances clean baseline cases (Category 1)
+   against single-error cases (Categories 2-5) and compound multi-error
+   cases (Category 6), allowing evaluation of whether system performance
+   degrades as task complexity increases — directly addressing the
+   research question on agentic vs. standard RAG performance differences.
