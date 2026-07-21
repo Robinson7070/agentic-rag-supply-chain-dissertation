@@ -519,6 +519,28 @@ def extract_key_fields(full_text: str) -> dict:
                     'raw_text': match.group(0)
                 })
 
+    # Pattern 2a: Vantage DN delivery format
+    # "EC-902|Vehicle Battery 12V 90Ah|15|GOOD" (QTY_DELIVERED, no price)
+    dn_pipe_pattern = re.finditer(
+        r'([A-Z]{2,3}-\d{3})\|[^|\n]+\|(\d+)\|(?:GOOD|DAMAGED|PARTIAL|SHORT)',
+        full_text, re.IGNORECASE
+    )
+    for match in dn_pipe_pattern:
+        code = match.group(1)
+        if code not in seen_codes:
+            seen_codes.add(code)
+            try:
+                items.append({
+                    'code': code,
+                    'quantity': int(match.group(2)),
+                    'unit_price': None,
+                    'line_total': None,
+                    'raw_text': match.group(0),
+                    'note': 'qty_delivered'
+                })
+            except (ValueError, IndexError):
+                pass
+
     # Pattern 2b: Northgate prose format
     # "24 (twenty-four) units of ... (product code TY-440), at a unit price of £210.00"
     prose_pattern = re.finditer(

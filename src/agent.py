@@ -530,7 +530,7 @@ def create_agent():
         memory=memory,
         verbose=True,           # show ReAct reasoning trace
         max_iterations=15,      # prevent infinite loops
-        early_stopping_method="generate",
+        early_stopping_method="force",
         handle_parsing_errors=True,
         return_intermediate_steps=True
     )
