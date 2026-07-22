@@ -564,6 +564,123 @@ def extract_key_fields(full_text: str) -> dict:
             except (ValueError, IndexError):
                 pass
 
+    # Pattern 2c: Castlegate format — product code in brackets
+    # "Diesel Fuel Pump (FS-118) 10 178.00 1,780.00"
+    castlegate_pattern = re.finditer(
+        r'[A-Za-z\s]+\(([A-Z]{2,3}-\d{3})\)\s+(\d+)\s+([\d,]+\.\d{2})',
+        full_text
+    )
+    for match in castlegate_pattern:
+        code = match.group(1)
+        if code not in seen_codes:
+            seen_codes.add(code)
+            try:
+                qty = int(match.group(2))
+                unit_price = float(match.group(3).replace(',', ''))
+                items.append({
+                    'code': code,
+                    'quantity': qty,
+                    'unit_price': unit_price,
+                    'line_total': round(qty * unit_price, 2),
+                    'raw_text': match.group(0)
+                })
+            except (ValueError, IndexError):
+                pass
+
+    # Pattern 2d: Meridian DN two-column format
+    # "VP-311 Oil Filter Standard 100 110 Good"
+    # "VP-204 Brake Pad Set (Front) 30 26 Good"
+    meridian_dn_pattern = re.finditer(
+        r'([A-Z]{2,3}-\d{3})[^\n]*?(\d+)\s+(\d+)\s+(?:Good|good|GOOD|Damaged|damaged)',
+        full_text
+    )
+    for match in meridian_dn_pattern:
+        code = match.group(1)
+        if code not in seen_codes:
+            seen_codes.add(code)
+            try:
+                qty_ordered = int(match.group(2))
+                qty_delivered = int(match.group(3))
+                items.append({
+                    'code': code,
+                    'quantity': qty_delivered,
+                    'quantity_ordered': qty_ordered,
+                    'unit_price': None,
+                    'line_total': None,
+                    'raw_text': match.group(0),
+                    'note': 'qty_delivered'
+                })
+            except (ValueError, IndexError):
+                pass
+
+    # Pattern 2d2: Castlegate PO format — code on one line, qty/price on next
+    # "FS-118 — Diesel Fuel Pump\nQuantity: 10 units Price each: £165.00"
+    castlegate_po_pattern = re.finditer(
+        r'([A-Z]{2,3}-\d{3})[^\n]*\nQuantity:\s*(\d+)\s+units?\s+Price each:\s*£([\d,]+\.\d{2})',
+        full_text
+    )
+    for match in castlegate_po_pattern:
+        code = match.group(1)
+        if code not in seen_codes:
+            seen_codes.add(code)
+            try:
+                qty = int(match.group(2))
+                unit_price = float(match.group(3).replace(',', ''))
+                items.append({
+                    'code': code,
+                    'quantity': qty,
+                    'unit_price': unit_price,
+                    'line_total': round(qty * unit_price, 2),
+                    'raw_text': match.group(0)
+                })
+            except (ValueError, IndexError):
+                pass
+
+    # Pattern 2d3: Coastal PO format — description x qty @ price then (code XX-000)
+    # "Wiper sets x60 @ £18 = £1080\n(code FL-077)"
+    coastal_po_pattern = re.finditer(
+        r'[A-Za-z\s]+x(\d+)\s*@\s*£([\d.]+)[^\n]*\n\(code\s+([A-Z]{2,3}-\d{3})\)',
+        full_text, re.IGNORECASE
+    )
+    for match in coastal_po_pattern:
+        code = match.group(3)
+        if code not in seen_codes:
+            seen_codes.add(code)
+            try:
+                qty = int(match.group(1))
+                unit_price = float(match.group(2))
+                items.append({
+                    'code': code,
+                    'quantity': qty,
+                    'unit_price': unit_price,
+                    'line_total': round(qty * unit_price, 2),
+                    'raw_text': match.group(0)
+                })
+            except (ValueError, IndexError):
+                pass
+
+    # Pattern 2e: Coastal DN informal format
+    # "wiper sets (FL-077) - 50 only, not the full 60"
+    coastal_dn_pattern = re.finditer(
+        r'\(([A-Z]{2,3}-\d{3})\)\s*[-—]\s*(\d+)\s+only',
+        full_text, re.IGNORECASE
+    )
+    for match in coastal_dn_pattern:
+        code = match.group(1)
+        if code not in seen_codes:
+            seen_codes.add(code)
+            try:
+                items.append({
+                    'code': code,
+                    'quantity': int(match.group(2)),
+                    'unit_price': None,
+                    'line_total': None,
+                    'raw_text': match.group(0),
+                    'note': 'qty_delivered'
+                })
+            except (ValueError, IndexError):
+                pass
+
     # Pattern 3: Fallback — just product codes with no qty/price on same line
     fallback_codes = re.findall(r'\b([A-Z]{2,3}-\d{3})\b', full_text)
     for code in fallback_codes:
