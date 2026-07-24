@@ -1,0 +1,245 @@
+============================================================
+SUPPLY CHAIN DOCUMENT ANOMALY REPORT
+Generated: 2026-07-22 11:26:01
+Total anomalies flagged: 20
+============================================================
+
+Anomaly ID: ANOM-0001
+Type: total_mismatch
+PO Reference: PO-2026-1002
+Documents: PO-2026-1002.pdf vs INV-CF-3389.pdf
+Field: total_amount
+Values: 1980.0 vs 3060.0
+Impact: Total discrepancy of £1080.00
+Severity: high
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:43.859974
+----------------------------------------
+
+Anomaly ID: ANOM-0002
+Type: total_mismatch
+PO Reference: PO-2026-1003
+Documents: PO-2026-1003.pdf vs INV-NT-5512.pdf
+Field: total_amount
+Values: 5040.0 vs 6048.0
+Impact: Total discrepancy of £1008.00
+Severity: high
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:44.969132
+----------------------------------------
+
+Anomaly ID: ANOM-0003
+Type: price_mismatch
+PO Reference: PO-2026-2001
+Documents: PO-2026-2001.pdf vs INV-MV-8102.pdf
+Field: unit_price
+Values: 42.0 vs 46.5
+Impact: £180.00 overcharge on 40 units of VP-204
+Severity: high
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:48.232817
+----------------------------------------
+
+Anomaly ID: ANOM-0004
+Type: total_mismatch
+PO Reference: PO-2026-2001
+Documents: PO-2026-2001.pdf vs INV-MV-8102.pdf
+Field: total_amount
+Values: 2016.0 vs 2232.0
+Impact: Total discrepancy of £216.00
+Severity: high
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:48.237047
+----------------------------------------
+
+Anomaly ID: ANOM-0005
+Type: price_mismatch
+PO Reference: PO-2026-2002
+Documents: PO-2026-2002.pdf vs INV-CF-4410.pdf
+Field: unit_price
+Values: 165.0 vs 178.0
+Impact: £130.00 overcharge on 10 units of FS-118
+Severity: high
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:49.288579
+----------------------------------------
+
+Anomaly ID: ANOM-0006
+Type: total_mismatch
+PO Reference: PO-2026-2002
+Documents: PO-2026-2002.pdf vs INV-CF-4410.pdf
+Field: total_amount
+Values: 1650.0 vs 2136.0
+Impact: Total discrepancy of £486.00
+Severity: high
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:49.288579
+----------------------------------------
+
+Anomaly ID: ANOM-0007
+Type: price_mismatch
+PO Reference: PO-2026-2003
+Documents: PO-2026-2003.pdf vs INV-NT-6620.pdf
+Field: unit_price
+Values: 210.0 vs 225.0
+Impact: £300.00 overcharge on 20 units of TY-440
+Severity: high
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:50.494718
+----------------------------------------
+
+Anomaly ID: ANOM-0008
+Type: total_mismatch
+PO Reference: PO-2026-2003
+Documents: PO-2026-2003.pdf vs INV-NT-6620.pdf
+Field: total_amount
+Values: 4200.0 vs 5400.0
+Impact: Total discrepancy of £1200.00
+Severity: high
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:50.494718
+----------------------------------------
+
+Anomaly ID: ANOM-0009
+Type: quantity_mismatch
+PO Reference: PO-2026-2004
+Documents: PO-2026-2004.pdf vs DN-9215.pdf
+Field: quantity_delivered
+Values: 18 vs 15
+Impact: 3 units short — EC-902
+Severity: medium
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:51.947439
+----------------------------------------
+
+Anomaly ID: ANOM-0010
+Type: quantity_mismatch
+PO Reference: PO-2026-2005
+Documents: PO-2026-2005.pdf vs NOT_FOUND.pdf
+Field: quantity_delivered
+Values: 60 vs 50
+Impact: 10 units short — FL-077
+Severity: medium
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:52.995795
+----------------------------------------
+
+Anomaly ID: ANOM-0011
+Type: quantity_mismatch
+PO Reference: PO-2026-2006
+Documents: PO-2026-2006.pdf vs DN-9301.pdf
+Field: quantity_delivered
+Values: 100 vs 110
+Impact: 10 units over-delivery — VP-311
+Severity: medium
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:54.083480
+----------------------------------------
+
+Anomaly ID: ANOM-0012
+Type: missing_document
+PO Reference: PO-2026-2007
+Documents: N/A vs N/A
+Field: document_existence
+Values: expected vs missing
+Impact: delivery_note not found for PO-2026-2007
+Severity: high
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:54.083480
+----------------------------------------
+
+Anomaly ID: ANOM-0013
+Type: missing_document
+PO Reference: PO-2026-2008
+Documents: N/A vs N/A
+Field: document_existence
+Values: expected vs missing
+Impact: invoice not found for PO-2026-2008
+Severity: high
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:54.803604
+----------------------------------------
+
+Anomaly ID: ANOM-0014
+Type: total_mismatch
+PO Reference: PO-2026-2009
+Documents: PO-2026-2009.pdf vs INV-NT-7740.pdf
+Field: total_amount
+Values: 3360.0 vs 4032.0
+Impact: Total discrepancy of £672.00
+Severity: high
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:56.343968
+----------------------------------------
+
+Anomaly ID: ANOM-0015
+Type: quantity_mismatch
+PO Reference: PO-2026-2011
+Documents: PO-2026-2011.pdf vs INV-VE-9988.pdf
+Field: quantity
+Values: 10 vs 12
+Impact: PO ordered 10 units, Invoice charges for 12 units of EC-902
+Severity: high
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:58.523530
+----------------------------------------
+
+Anomaly ID: ANOM-0016
+Type: price_mismatch
+PO Reference: PO-2026-2012
+Documents: PO-2026-2012.pdf vs INV-MV-1102.pdf
+Field: unit_price
+Values: 42.0 vs 45.0
+Impact: £90.00 overcharge on 30 units of VP-204
+Severity: medium
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:59.596860
+----------------------------------------
+
+Anomaly ID: ANOM-0017
+Type: total_mismatch
+PO Reference: PO-2026-2012
+Documents: PO-2026-2012.pdf vs INV-MV-1102.pdf
+Field: total_amount
+Values: 1512.0 vs 1620.0
+Impact: Total discrepancy of £108.00
+Severity: high
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:59.601534
+----------------------------------------
+
+Anomaly ID: ANOM-0018
+Type: quantity_mismatch
+PO Reference: PO-2026-2012
+Documents: PO-2026-2012.pdf vs DN-9602.pdf
+Field: quantity_delivered
+Values: 30 vs 26
+Impact: 4 units short — VP-204
+Severity: medium
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:59.958960
+----------------------------------------
+
+Anomaly ID: ANOM-0019
+Type: missing_document
+PO Reference: PO-2026-2013
+Documents: N/A vs N/A
+Field: document_existence
+Values: expected vs missing
+Impact: invoice not found for PO-2026-2013
+Severity: high
+Status: pending_human_review
+Timestamp: 2026-07-22T11:25:59.962640
+----------------------------------------
+
+Anomaly ID: ANOM-0020
+Type: total_mismatch
+PO Reference: PO-2026-2014
+Documents: PO-2026-2014.pdf vs NOT_FOUND.pdf
+Field: total_amount
+Values: 720.0 vs 960.0
+Impact: Total discrepancy of £240.00
+Severity: high
+Status: pending_human_review
+Timestamp: 2026-07-22T11:26:01.529768
+----------------------------------------
