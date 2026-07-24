@@ -106,7 +106,9 @@ def detect_document_type(text: str) -> str:
     dn_indicators = [
         'delivery note', 'del. note', 'dn no', 'dn_no', 'delivery confirmation',
         'goods delivered', 'received by', 'delivered to', 'delivery date',
-        'despatch note', 'dispatch note', 'goods receipt'
+        'despatch note', 'dispatch note', 'goods receipt',
+        'proof of delivery', 'goods delivered confirmation',
+        'items received', 'delivered in full', 'signed for by'
     ]
     dn_score = sum(1 for kw in dn_indicators if kw in text_lower)
 
@@ -128,6 +130,14 @@ def detect_document_type(text: str) -> str:
     if has_dn_markers and dn_score > 0:
         return 'delivery_note'
     
+    # Strong delivery note override: "Proof of Delivery" is unambiguous
+    has_pod = bool(re.search(
+        r'proof of delivery|goods delivered confirmation|delivery confirmation',
+        text, re.IGNORECASE
+    ))
+    if has_pod:
+        return 'delivery_note'
+
     # Strong invoice override: explicit INVOICE heading takes priority
     has_invoice_heading = bool(re.search(
         r'^INVOICE$|^TAX INVOICE$|INVOICE\s*\n|INVOICE EXPORT|INVOICE_NO\|',
@@ -436,6 +446,7 @@ def extract_key_fields(full_text: str) -> dict:
 
     # --- Total Amount ---
     total_priority_patterns = [
+        # Highest priority — explicit grand totals with VAT included
         r'GRAND TOTAL:?\s*£?\s?([\d,]+(?:\.\d{2})?)',
         r'AMOUNT DUE:?\s*£?\s?([\d,]+(?:\.\d{2})?)',
         r'Total amount now due:?\s*£([\d,]+(?:\.\d{2})?)',
@@ -443,10 +454,16 @@ def extract_key_fields(full_text: str) -> dict:
         r'TOTAL PAYABLE\s*£?\s?([\d,]+(?:\.\d{2})?)',
         r'TOTAL_DUE\|([\d,]+(?:\.\d{2})?)',
         r'=\s*TOTAL DUE:\s*£([\d,]+(?:\.\d{2})?)',
-        r'TOTAL:\s*£([\d,]+(?:\.\d{2})?)',
-        r'\bTOTAL\|([\d,]+(?:\.\d{2})?)',
+        # Order Total — Castlegate PO format (must come before plain TOTAL:)
         r'Order Total:\s*£([\d,]+(?:\.\d{2})?)',
         r'bringing the (?:order )?total to £([\d,]+(?:\.\d{2})?)',
+        # Northgate prose format — total AFTER VAT mention
+        r'Total amount now due:\s*£([\d,]+(?:\.\d{2})?)',
+        # Vantage pipe format
+        r'\bTOTAL\|([\d,]+(?:\.\d{2})?)',
+        # Generic TOTAL (lower priority to avoid picking up line item totals)
+        r'TOTAL:\s*£([\d,]+(?:\.\d{2})?)',
+        # Subtotals — lowest priority
         r'Subtotal:?\s*£?\s?([\d,]+(?:\.\d{2})?)',
         r'subtotal\s*£([\d,]+(?:\.\d{2})?)',
         r'SUBTOTAL\|([\d,]+(?:\.\d{2})?)',
@@ -681,6 +698,53 @@ def extract_key_fields(full_text: str) -> dict:
             except (ValueError, IndexError):
                 pass
 
+    # Pattern 2f: Castlegate DN format
+    # "Diesel Fuel Pump (FS-118): 10 of 10 ordered — OK"
+    # or bullet character prefix
+    castlegate_dn_pattern = re.finditer(
+        r'[^\n]*\(([A-Z]{2,3}-\d{3})\):\s*(\d+)\s+of\s+(\d+)\s+ordered',
+        full_text, re.IGNORECASE
+    )
+    for match in castlegate_dn_pattern:
+        code = match.group(1)
+        if code not in seen_codes:
+            seen_codes.add(code)
+            try:
+                items.append({
+                    'code': code,
+                    'quantity': int(match.group(2)),
+                    'quantity_ordered': int(match.group(3)),
+                    'unit_price': None,
+                    'line_total': None,
+                    'raw_text': match.group(0),
+                    'note': 'qty_delivered'
+                })
+            except (ValueError, IndexError):
+                pass
+
+    # Pattern 2g: Northgate prose DN format
+    # "20 units of Commercial Tyre 22.5" (TY-440) — all 20 received in good condition"
+    northgate_dn_pattern = re.finditer(
+        r'(\d+)\s+units?\s+of[^(]+\(([A-Z]{2,3}-\d{3})\)[^\n]*(?:received|delivered)',
+        full_text, re.IGNORECASE
+    )
+    for match in northgate_dn_pattern:
+        code = match.group(2)
+        if code not in seen_codes:
+            seen_codes.add(code)
+            try:
+                items.append({
+                    'code': code,
+                    'quantity': int(match.group(1)),
+                    'unit_price': None,
+                    'line_total': None,
+                    'raw_text': match.group(0),
+                    'note': 'qty_delivered'
+                })
+            except (ValueError, IndexError):
+                pass
+
+    # OLD Pattern 2e was here - now split above
     # Pattern 3: Fallback — just product codes with no qty/price on same line
     fallback_codes = re.findall(r'\b([A-Z]{2,3}-\d{3})\b', full_text)
     for code in fallback_codes:

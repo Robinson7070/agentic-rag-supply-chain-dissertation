@@ -113,8 +113,8 @@ def search_documents(query: str) -> str:
     )
     query_vector = np.array([response.data[0].embedding], dtype=np.float32)
     
-    # Search FAISS
-    distances, indices = index.search(query_vector, 20)
+    # Search FAISS — cast wide net before filtering
+    distances, indices = index.search(query_vector, 50)
     
     # Extract PO/Invoice/DN references from query for filtering
     import re
@@ -530,7 +530,7 @@ def create_agent():
         memory=memory,
         verbose=True,           # show ReAct reasoning trace
         max_iterations=15,      # prevent infinite loops
-        early_stopping_method="force",
+        early_stopping_method="generate",
         handle_parsing_errors=True,
         return_intermediate_steps=True
     )

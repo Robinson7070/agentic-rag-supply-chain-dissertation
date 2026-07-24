@@ -401,6 +401,7 @@ if __name__ == "__main__":
     document_results = []
     failed = []
     
+    # First pass: process all documents
     for filepath in pdf_files:
         try:
             result = process_document(filepath)
@@ -412,6 +413,36 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"  [ERROR] {filepath}: {e}")
             failed.append(filepath)
+    
+    # Second pass: inherit PO ref from sibling documents in same folder
+    # This fixes DNs and Invoices that don't explicitly mention the PO number
+    print("\nInheriting PO references from folder siblings...")
+    
+    # Build folder -> po_ref mapping from documents that DO have PO refs
+    import os
+    folder_po_map = {}
+    for result in document_results:
+        if result.po_ref and result.po_ref != 'NOT_FOUND' and not result.po_ref.startswith('PO-(informal'):
+            folder = os.path.dirname(result.source_file)
+            if folder not in folder_po_map:
+                folder_po_map[folder] = result.po_ref
+    
+    # Apply inherited PO refs to documents with NOT_FOUND
+    inherited_count = 0
+    for result in document_results:
+        if result.po_ref == 'NOT_FOUND' or result.po_ref.startswith('PO-(informal'):
+            folder = os.path.dirname(result.source_file)
+            if folder in folder_po_map:
+                inherited_po = folder_po_map[folder]
+                print(f"  Inheriting {inherited_po} for {os.path.basename(result.source_file)}")
+                result.po_ref = inherited_po
+                # Also update all chunks
+                for chunk in result.chunks:
+                    if chunk.po_ref == 'NOT_FOUND' or chunk.po_ref.startswith('PO-(informal'):
+                        chunk.po_ref = inherited_po
+                inherited_count += 1
+    
+    print(f"  Inherited PO refs for {inherited_count} documents")
     
     print(f"\nProcessed: {len(document_results)} documents")
     if failed:

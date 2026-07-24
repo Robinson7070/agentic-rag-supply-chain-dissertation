@@ -86,7 +86,7 @@ def verify_document_set(po_ref: str, verbose: bool = True) -> Dict:
     
     for doc_type in doc_types:
         check_result = check_document_exists.invoke(f"{po_ref}|{doc_type}")
-        exists = 'FOUND' in check_result
+        exists = check_result.strip().startswith('FOUND')
         doc_status[doc_type] = exists
         
         if exists:
@@ -158,13 +158,22 @@ def verify_document_set(po_ref: str, verbose: bool = True) -> Dict:
         if verbose:
             print(f"\n  Retrieving Invoice data...")
         
+        # Search specifically for invoice document type
         inv_search = search_documents.invoke(
-            f"{po_ref} invoice line items quantities prices total"
+            f"{po_ref} invoice unit price line items amount due"
         )
         
         inv_items = _extract_items_from_search(inv_search, 'invoice')
         inv_total = _extract_total_from_search(inv_search, 'invoice')
         inv_ref = _extract_ref_from_search(inv_search, 'invoice_ref')
+        
+        # If invoice items not found via type filter, try fallback with invoice ref
+        if not inv_items and inv_ref != 'NOT_FOUND':
+            inv_search2 = search_documents.invoke(
+                f"{inv_ref} invoice line items unit price"
+            )
+            inv_items = _extract_items_from_search(inv_search2, 'invoice')
+            inv_total = _extract_total_from_search(inv_search2, 'invoice') or inv_total
         
         if verbose:
             print(f"  Invoice items: {[(i['code'], i.get('quantity'), i.get('unit_price')) for i in inv_items]}")
@@ -195,11 +204,19 @@ def verify_document_set(po_ref: str, verbose: bool = True) -> Dict:
             print(f"\n  Retrieving Delivery Note data...")
         
         dn_search = search_documents.invoke(
-            f"{po_ref} delivery note items quantity delivered"
+            f"{po_ref} delivery note received quantity delivered"
         )
         
         dn_items = _extract_items_from_search(dn_search, 'delivery_note')
         dn_ref = _extract_ref_from_search(dn_search, 'dn_ref')
+        
+        # Fallback: try searching for proof of delivery
+        if not dn_items:
+            dn_search2 = search_documents.invoke(
+                f"{po_ref} proof of delivery items received condition"
+            )
+            dn_items = _extract_items_from_search(dn_search2, 'delivery_note')
+            dn_ref = _extract_ref_from_search(dn_search2, 'dn_ref') or dn_ref
         
         if verbose:
             print(f"  DN items: {[(i['code'], i.get('quantity')) for i in dn_items]}")
@@ -248,41 +265,64 @@ def _extract_items_from_search(search_output: str, target_doc_type: str) -> List
     items = []
     seen_codes = set()
     
-    # Find all Line Items JSON arrays in the search output
-    line_items_pattern = re.finditer(
-        r'Document Type: ' + target_doc_type.replace('_', r'[\s_]') +
-        r'.*?Line Items: (\[.*?\])',
-        search_output, re.DOTALL | re.IGNORECASE
-    )
+    # Split search output into individual result blocks
+    # Each block starts with [Result N]
+    result_blocks = re.split(r'\[Result \d+\]', search_output)
     
-    for match in line_items_pattern:
-        try:
-            items_json = match.group(1)
-            parsed = json.loads(items_json)
-            for item in parsed:
-                code = item.get('code')
-                if code and code not in seen_codes:
-                    seen_codes.add(code)
-                    items.append(item)
-        except (json.JSONDecodeError, AttributeError):
+    # Process each block separately to avoid cross-block contamination
+    for block in result_blocks:
+        if not block.strip():
             continue
-    
-    # Fallback: find any items if type-specific search fails
-    if not items:
-        all_items_pattern = re.finditer(
+        
+        # Check if this block matches the target document type
+        doc_type_match = re.search(r'Document Type:\s*(\S+)', block)
+        if not doc_type_match:
+            continue
+        
+        block_doc_type = doc_type_match.group(1).strip().lower()
+        
+        # Normalise for comparison
+        target_normalised = target_doc_type.lower().replace('_', '')
+        block_normalised = block_doc_type.replace('_', '').replace(' ', '')
+        
+        if target_normalised not in block_normalised and block_normalised not in target_normalised:
+            continue
+        
+        # Extract Line Items from this block
+        line_items_match = re.search(
             r'Line Items: (\[.*?\])',
-            search_output, re.DOTALL
+            block, re.DOTALL
         )
-        for match in all_items_pattern:
+        
+        if line_items_match:
             try:
-                parsed = json.loads(match.group(1))
+                parsed = json.loads(line_items_match.group(1))
                 for item in parsed:
                     code = item.get('code')
                     if code and code not in seen_codes:
-                        seen_codes.add(code)
-                        items.append(item)
+                        # Only add items with actual data
+                        if item.get('quantity') is not None or item.get('unit_price') is not None:
+                            seen_codes.add(code)
+                            items.append(item)
             except (json.JSONDecodeError, AttributeError):
                 continue
+    
+    # Fallback: if no typed match found, take first block with items
+    if not items:
+        for block in result_blocks:
+            line_items_match = re.search(r'Line Items: (\[.*?\])', block, re.DOTALL)
+            if line_items_match:
+                try:
+                    parsed = json.loads(line_items_match.group(1))
+                    for item in parsed:
+                        code = item.get('code')
+                        if code and code not in seen_codes:
+                            seen_codes.add(code)
+                            items.append(item)
+                    if items:
+                        break
+                except (json.JSONDecodeError, AttributeError):
+                    continue
     
     return items
 
