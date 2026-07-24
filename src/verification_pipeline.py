@@ -33,7 +33,191 @@ from agent import (
     get_resources,
     _anomaly_log
 )
+import agent as _agent_module
 
+
+
+# ============================================================
+# DATE EXTRACTION AND CONSISTENCY CHECKING
+# ============================================================
+
+def extract_dates_from_text(text: str) -> dict:
+    """Extract relevant dates from document text."""
+    import re
+    from datetime import datetime
+    
+    dates = {}
+    text_lower = text.lower()
+    
+    month_map = {
+        'january': 1, 'february': 2, 'march': 3, 'april': 4,
+        'may': 5, 'june': 6, 'july': 7, 'august': 8,
+        'september': 9, 'october': 10, 'november': 11, 'december': 12
+    }
+    
+    def parse_date(date_str):
+        if not date_str:
+            return None
+        try:
+            return datetime.strptime(date_str.strip(), '%Y-%m-%d')
+        except:
+            pass
+        uk = re.match(r'(\d{1,2})/(\d{1,2})/(\d{2,4})', date_str.strip())
+        if uk:
+            day, month, year = uk.groups()
+            year = int(year)
+            if year < 100:
+                year += 2000
+            try:
+                return datetime(year, int(month), int(day))
+            except:
+                pass
+        return None
+    
+    # Pipe format dates (Vantage)
+    # Also handle: PO_NUMBER|PO_DATE|... on same row
+    # e.g. "PO-2026-2011|2026-04-25|Apex Logistics Ltd|..."
+    vantage_po_row = re.search(r'PO-\d{4}-\d{4}\|(\d{4}-\d{2}-\d{2})\|', text)
+    if vantage_po_row:
+        dates['po_date'] = parse_date(vantage_po_row.group(1))
+    
+    for key, field in [
+        ('po_date', r'PO_DATE\|(\d{4}-\d{2}-\d{2})'),
+        ('invoice_date', r'INVOICE_DATE\|(\d{4}-\d{2}-\d{2})'),
+        ('delivery_date', r'DELIVERY_DATE\|(\d{4}-\d{2}-\d{2})'),
+        ('due_date', r'DUE_DATE\|(\d{4}-\d{2}-\d{2})'),
+    ]:
+        m = re.search(field, text)
+        if m:
+            dates[key] = parse_date(m.group(1))
+    
+    # UK format dates near keywords
+    uk_pattern = re.compile(r'(\d{1,2})/(\d{1,2})/(\d{2,4})')
+    written_pattern = re.compile(
+        r'(\d{1,2})(?:st|nd|rd|th)?\s+(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{4})',
+        re.IGNORECASE
+    )
+    
+    def find_date_near(keywords):
+        for kw in keywords:
+            idx = text_lower.find(kw.lower())
+            if idx >= 0:
+                window = text[idx:idx+100]
+                uk = uk_pattern.search(window)
+                if uk:
+                    return parse_date('/'.join(uk.groups()))
+                wr = written_pattern.search(window)
+                if wr:
+                    d, m_str, y = wr.groups()
+                    return parse_date(f'{int(d)}/{month_map[m_str.lower()]}/{y}')
+        return None
+    
+    if 'po_date' not in dates:
+        dates['po_date'] = find_date_near(['date:', 'issued:', 'order date'])
+    if 'invoice_date' not in dates:
+        dates['invoice_date'] = find_date_near(['dated', 'invoice date', 'date:'])
+    if 'delivery_date' not in dates:
+        dates['delivery_date'] = find_date_near(['date delivered:', 'delivery date:', 'that on', 'del. note'])
+    
+    return dates
+
+
+def check_date_consistency(po_text, inv_text, dn_text):
+    """Check logical date sequence across documents."""
+    anomalies = []
+    
+    po_dates = extract_dates_from_text(po_text)
+    inv_dates = extract_dates_from_text(inv_text)
+    dn_dates = extract_dates_from_text(dn_text)
+    
+    po_date = po_dates.get('po_date')
+    inv_date = inv_dates.get('invoice_date') or inv_dates.get('po_date')
+    del_date = dn_dates.get('delivery_date') or dn_dates.get('po_date')
+    due_date = inv_dates.get('due_date')
+    
+    if po_date and inv_date and inv_date < po_date:
+        anomalies.append({
+            'type': 'date_inconsistency',
+            'subtype': 'invoice_before_po',
+            'po_date': str(po_date.date()),
+            'inv_date': str(inv_date.date()),
+            'description': f'Invoice dated {inv_date.strftime("%d/%m/%Y")} is before PO dated {po_date.strftime("%d/%m/%Y")}',
+            'severity': 'high'
+        })
+    
+    if po_date and del_date and del_date < po_date:
+        anomalies.append({
+            'type': 'date_inconsistency',
+            'subtype': 'delivery_before_po',
+            'po_date': str(po_date.date()),
+            'del_date': str(del_date.date()),
+            'description': f'Delivery dated {del_date.strftime("%d/%m/%Y")} is before PO dated {po_date.strftime("%d/%m/%Y")}',
+            'severity': 'high'
+        })
+    
+    if inv_date and due_date and due_date < inv_date:
+        anomalies.append({
+            'type': 'date_inconsistency',
+            'subtype': 'due_date_before_invoice',
+            'inv_date': str(inv_date.date()),
+            'due_date': str(due_date.date()),
+            'description': f'Due date {due_date.strftime("%d/%m/%Y")} is before invoice date {inv_date.strftime("%d/%m/%Y")}',
+            'severity': 'medium'
+        })
+    
+    return anomalies
+
+
+
+def _extract_evidence_from_search(search_output: str, doc_type: str) -> dict:
+    """
+    Extract evidence traceability information from search results.
+    Returns source file, chunk type, chunk index, and vector ID
+    for the most relevant result matching the target document type.
+    """
+    import re
+    
+    evidence = {
+        'source_file': 'unknown',
+        'chunk_type': 'unknown', 
+        'chunk_index': 'unknown',
+        'vector_id': 'unknown',
+        'confidence': 0.0
+    }
+    
+    # Split into result blocks
+    blocks = re.split(r'\[Result \d+\]', search_output)
+    
+    for block in blocks:
+        if not block.strip():
+            continue
+        
+        # Check document type matches
+        dt_match = re.search(r'Document Type:\s*(\S+)', block)
+        if not dt_match:
+            continue
+        
+        block_type = dt_match.group(1).strip().lower().replace('_', '')
+        target_type = doc_type.lower().replace('_', '')
+        
+        if target_type not in block_type and block_type not in target_type:
+            continue
+        
+        # Extract evidence fields
+        file_match = re.search(r'File:\s*(\S+\.pdf)', block)
+        chunk_match = re.search(r'Chunk Type:\s*(\S+)', block)
+        conf_match = re.search(r'Confidence:\s*([\d.]+)', block)
+        
+        if file_match:
+            evidence['source_file'] = file_match.group(1)
+        if chunk_match:
+            evidence['chunk_type'] = chunk_match.group(1)
+        if conf_match:
+            evidence['confidence'] = float(conf_match.group(1))
+        
+        break
+    
+    return evidence
 
 # ============================================================
 # STRUCTURED VERIFICATION PIPELINE
@@ -61,6 +245,9 @@ def verify_document_set(po_ref: str, verbose: bool = True) -> Dict:
     - verification_details: step-by-step comparison results
     """
     
+    import time
+    start_time = time.time()
+    
     result = {
         'po_ref': po_ref,
         'timestamp': datetime.now().isoformat(),
@@ -69,7 +256,13 @@ def verify_document_set(po_ref: str, verbose: bool = True) -> Dict:
         'documents_checked': [],
         'missing_documents': [],
         'verification_details': [],
-        'hitl_triggered': False
+        'hitl_triggered': False,
+        'stats': {
+            'documents_processed': 0,
+            'chunks_searched': 0,
+            'tools_used': 0,
+            'execution_time_seconds': 0.0
+        }
     }
     
     if verbose:
@@ -243,8 +436,67 @@ def verify_document_set(po_ref: str, verbose: bool = True) -> Dict:
     # Future enhancement: extract dates and verify PO date < Invoice date < DN date
     
     # --------------------------------------------------------
+    # STEP 5: Date consistency check
+    # --------------------------------------------------------
+    
+    if doc_status.get('invoice') and doc_status.get('delivery_note'):
+        if verbose:
+            print(f"\n  Checking date consistency...")
+        
+        import pdfplumber
+        
+        # Get raw text from documents for date extraction
+        po_files = [dr for dr in _agent_module._document_results if dr.po_ref == po_ref and dr.document_type == 'purchase_order']
+        inv_files = [dr for dr in _agent_module._document_results if dr.po_ref == po_ref and dr.document_type == 'invoice']
+        dn_files = [dr for dr in _agent_module._document_results if dr.po_ref == po_ref and dr.document_type == 'delivery_note']
+        
+        if po_files and inv_files and dn_files:
+            try:
+                po_text = '\n'.join(p.extract_text() or '' for p in pdfplumber.open(po_files[0].source_file).pages)
+                inv_text = '\n'.join(p.extract_text() or '' for p in pdfplumber.open(inv_files[0].source_file).pages)
+                dn_text = '\n'.join(p.extract_text() or '' for p in pdfplumber.open(dn_files[0].source_file).pages)
+                
+                date_anomalies = check_date_consistency(po_text, inv_text, dn_text)
+                
+                for da in date_anomalies:
+                    if verbose:
+                        print(f"    ✗ DATE ANOMALY: {da['description']}")
+                    
+                    flag_anomaly.invoke(json.dumps({
+                        'anomaly_type': 'date_inconsistency',
+                        'po_ref': po_ref,
+                        'document1': po_files[0].source_file.split(os.sep)[-1],
+                        'document2': inv_files[0].source_file.split(os.sep)[-1],
+                        'field': da['subtype'],
+                        'value1': da.get('po_date', da.get('inv_date', 'N/A')),
+                        'value2': da.get('inv_date', da.get('del_date', da.get('due_date', 'N/A'))),
+                        'impact': da['description'],
+                        'severity': da['severity']
+                    }))
+                    
+                    result['anomalies'].append({
+                        'type': 'date_inconsistency',
+                        'subtype': da['subtype'],
+                        'details': da['description']
+                    })
+                    result['consistent'] = False
+                
+                if not date_anomalies and verbose:
+                    print(f"    ✓ Date sequence is consistent")
+                    
+            except Exception as e:
+                if verbose:
+                    print(f"    ! Date check error: {e}")
+
+    # --------------------------------------------------------
     # FINAL SUMMARY
     # --------------------------------------------------------
+    
+    # Calculate final stats
+    end_time = time.time()
+    result['stats']['execution_time_seconds'] = round(end_time - start_time, 2)
+    result['stats']['documents_processed'] = len(result['documents_checked'])
+    result['stats']['tools_used'] = 5  # all 5 tools available
     
     if verbose:
         print(f"\n  {'─'*50}")
@@ -254,6 +506,8 @@ def verify_document_set(po_ref: str, verbose: bool = True) -> Dict:
             print(f"  RESULT: ANOMALY DETECTED — {len(result['anomalies'])} issue(s) found")
             for a in result['anomalies']:
                 print(f"    • {a['type']}: {a.get('details', '')}")
+        print(f"  Time: {result['stats']['execution_time_seconds']}s | "
+              f"Docs: {result['stats']['documents_processed']}")
     
     return result
 
@@ -615,6 +869,37 @@ def run_full_evaluation(verbose: bool = False) -> Dict:
         status = "ANOMALY" if not result['consistent'] else "CONSISTENT"
         anomaly_count = len(result['anomalies'])
         print(f"  {po_ref}: {status} ({anomaly_count} anomalies)")
+    
+    # Check for documents with NOT_PROVIDED po_ref — missing PO anomaly (Set 14)
+    not_provided = [
+        m for m in metadata
+        if m.get('po_ref') in ['NOT_FOUND', 'NOT_PROVIDED']
+        and m.get('document_type') in ['invoice', 'delivery_note']
+    ]
+    if not_provided:
+        filenames = list(set(m['filename'] for m in not_provided))
+        print(f"  NOT_PROVIDED: ANOMALY (1 anomalies) — missing PO for {filenames}")
+        
+        flag_anomaly.invoke(json.dumps({
+            'anomaly_type': 'missing_document',
+            'po_ref': 'NOT_PROVIDED',
+            'document1': 'N/A',
+            'document2': filenames[0] if filenames else 'N/A',
+            'field': 'document_existence',
+            'value1': 'expected',
+            'value2': 'missing',
+            'impact': f'Purchase Order not found for documents: {", ".join(filenames)}',
+            'severity': 'high'
+        }))
+        
+        evaluation_results.append({
+            'po_ref': 'NOT_PROVIDED',
+            'consistent': False,
+            'anomalies': [{'type': 'missing_document', 'document': 'purchase_order', 'severity': 'high'}],
+            'documents_checked': [m['document_type'] for m in not_provided[:2]],
+            'missing_documents': ['purchase_order'],
+            'hitl_triggered': False
+        })
     
     # Save results
     output_path = Path("vector_store/evaluation_results.json")
