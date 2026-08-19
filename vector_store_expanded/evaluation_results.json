@@ -1,0 +1,1262 @@
+{
+  "metrics": {
+    "true_positives": 43,
+    "true_negatives": 25,
+    "false_positives": 0,
+    "false_negatives": 32,
+    "errors": 0,
+    "precision": 1.0,
+    "recall": 0.5733333333333334,
+    "f1_score": 0.728813559322034,
+    "accuracy": 0.68
+  },
+  "per_category": {
+    "consistent": {
+      "total": 25,
+      "correct": 25
+    },
+    "price_mismatch": {
+      "total": 15,
+      "correct": 4
+    },
+    "quantity_mismatch": {
+      "total": 15,
+      "correct": 8
+    },
+    "missing_document": {
+      "total": 15,
+      "correct": 15
+    },
+    "date_inconsistency": {
+      "total": 15,
+      "correct": 7
+    },
+    "multiple_errors": {
+      "total": 15,
+      "correct": 9
+    }
+  },
+  "per_format": {
+    "meridian": {
+      "total": 20,
+      "correct": 11
+    },
+    "vantage": {
+      "total": 20,
+      "correct": 16
+    },
+    "castlegate": {
+      "total": 20,
+      "correct": 15
+    },
+    "northgate": {
+      "total": 20,
+      "correct": 13
+    },
+    "coastal": {
+      "total": 20,
+      "correct": 13
+    }
+  },
+  "processing": {
+    "total_seconds": 171.35162377357483,
+    "avg_per_set": 1.7135162377357482
+  },
+  "num_sets": 100,
+  "results": [
+    {
+      "set_num": 1,
+      "po_ref": "PO-2026-3001",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 2,
+      "po_ref": "PO-2026-3002",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 3,
+      "po_ref": "PO-2026-3003",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 4,
+      "po_ref": "PO-2026-3004",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 5,
+      "po_ref": "PO-2026-3005",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 6,
+      "po_ref": "PO-2026-3006",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 7,
+      "po_ref": "PO-2026-3007",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 8,
+      "po_ref": "PO-2026-3008",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 9,
+      "po_ref": "PO-2026-3009",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 10,
+      "po_ref": "PO-2026-3010",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 11,
+      "po_ref": "PO-2026-3011",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 12,
+      "po_ref": "PO-2026-3012",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 13,
+      "po_ref": "PO-2026-3013",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 14,
+      "po_ref": "PO-2026-3014",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 15,
+      "po_ref": "PO-2026-3015",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 16,
+      "po_ref": "PO-2026-3016",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 17,
+      "po_ref": "PO-2026-3017",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 18,
+      "po_ref": "PO-2026-3018",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 19,
+      "po_ref": "PO-2026-3019",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 20,
+      "po_ref": "PO-2026-3020",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 21,
+      "po_ref": "PO-2026-3021",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 22,
+      "po_ref": "PO-2026-3022",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 23,
+      "po_ref": "PO-2026-3023",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 24,
+      "po_ref": "PO-2026-3024",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 25,
+      "po_ref": "PO-2026-3025",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "consistent",
+      "expected_has_anomaly": false,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": true,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 26,
+      "po_ref": "PO-2026-3026",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "price_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 27,
+      "po_ref": "PO-2026-3027",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "price_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 28,
+      "po_ref": "PO-2026-3028",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "price_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "price_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 29,
+      "po_ref": "PO-2026-3029",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "price_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 30,
+      "po_ref": "PO-2026-3030",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "price_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 31,
+      "po_ref": "PO-2026-3031",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "price_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 32,
+      "po_ref": "PO-2026-3032",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "price_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "price_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 33,
+      "po_ref": "PO-2026-3033",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "price_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "price_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 34,
+      "po_ref": "PO-2026-3034",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "price_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 35,
+      "po_ref": "PO-2026-3035",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "price_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 36,
+      "po_ref": "PO-2026-3036",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "price_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 37,
+      "po_ref": "PO-2026-3037",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "price_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "price_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 38,
+      "po_ref": "PO-2026-3038",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "price_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 39,
+      "po_ref": "PO-2026-3039",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "price_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 40,
+      "po_ref": "PO-2026-3040",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "price_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 41,
+      "po_ref": "PO-2026-3041",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "quantity_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 42,
+      "po_ref": "PO-2026-3042",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "quantity_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "quantity_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 43,
+      "po_ref": "PO-2026-3043",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "quantity_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "quantity_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 44,
+      "po_ref": "PO-2026-3044",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "quantity_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 45,
+      "po_ref": "PO-2026-3045",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "quantity_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "quantity_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 46,
+      "po_ref": "PO-2026-3046",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "quantity_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 47,
+      "po_ref": "PO-2026-3047",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "quantity_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "quantity_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 48,
+      "po_ref": "PO-2026-3048",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "quantity_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 49,
+      "po_ref": "PO-2026-3049",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "quantity_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "quantity_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 50,
+      "po_ref": "PO-2026-3050",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "quantity_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 51,
+      "po_ref": "PO-2026-3051",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "quantity_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 52,
+      "po_ref": "PO-2026-3052",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "quantity_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "quantity_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 53,
+      "po_ref": "PO-2026-3053",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "quantity_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 54,
+      "po_ref": "PO-2026-3054",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "quantity_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "quantity_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 55,
+      "po_ref": "PO-2026-3055",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "quantity_mismatch",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "quantity_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 56,
+      "po_ref": "PO-2026-3056",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "missing_document",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "missing_document"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 57,
+      "po_ref": "PO-2026-3057",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "missing_document",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "missing_document"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 58,
+      "po_ref": "PO-2026-3058",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "missing_document",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "missing_document"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 59,
+      "po_ref": "PO-2026-3059",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "missing_document",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "missing_document"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 60,
+      "po_ref": "PO-2026-3060",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "missing_document",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "missing_document"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 61,
+      "po_ref": "PO-2026-3061",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "missing_document",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "missing_document"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 62,
+      "po_ref": "PO-2026-3062",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "missing_document",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "missing_document"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 63,
+      "po_ref": "PO-2026-3063",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "missing_document",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "missing_document"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 64,
+      "po_ref": "PO-2026-3064",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "missing_document",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "missing_document"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 65,
+      "po_ref": "PO-2026-3065",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "missing_document",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "missing_document"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 66,
+      "po_ref": "PO-2026-3066",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "missing_document",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "missing_document"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 67,
+      "po_ref": "PO-2026-3067",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "missing_document",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "missing_document"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 68,
+      "po_ref": "PO-2026-3068",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "missing_document",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "missing_document"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 69,
+      "po_ref": "PO-2026-3069",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "missing_document",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "missing_document"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 70,
+      "po_ref": "PO-2026-3070",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "missing_document",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "missing_document"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 71,
+      "po_ref": "PO-2026-3071",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "date_inconsistency",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 72,
+      "po_ref": "PO-2026-3072",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "date_inconsistency",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 73,
+      "po_ref": "PO-2026-3073",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "date_inconsistency",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "date_inconsistency"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 74,
+      "po_ref": "PO-2026-3074",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "date_inconsistency",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 75,
+      "po_ref": "PO-2026-3075",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "date_inconsistency",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "date_inconsistency"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 76,
+      "po_ref": "PO-2026-3076",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "date_inconsistency",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "date_inconsistency"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 77,
+      "po_ref": "PO-2026-3077",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "date_inconsistency",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 78,
+      "po_ref": "PO-2026-3078",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "date_inconsistency",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 79,
+      "po_ref": "PO-2026-3079",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "date_inconsistency",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 80,
+      "po_ref": "PO-2026-3080",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "date_inconsistency",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 81,
+      "po_ref": "PO-2026-3081",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "date_inconsistency",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "date_inconsistency"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 82,
+      "po_ref": "PO-2026-3082",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "date_inconsistency",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 83,
+      "po_ref": "PO-2026-3083",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "date_inconsistency",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "date_inconsistency"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 84,
+      "po_ref": "PO-2026-3084",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "date_inconsistency",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "date_inconsistency"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 85,
+      "po_ref": "PO-2026-3085",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "date_inconsistency",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "date_inconsistency"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    },
+    {
+      "set_num": 86,
+      "po_ref": "PO-2026-3086",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "multiple_errors",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 87,
+      "po_ref": "PO-2026-3087",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "multiple_errors",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "quantity_mismatch",
+        "price_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 2
+    },
+    {
+      "set_num": 88,
+      "po_ref": "PO-2026-3088",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "multiple_errors",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "quantity_mismatch",
+        "price_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 2
+    },
+    {
+      "set_num": 89,
+      "po_ref": "PO-2026-3089",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "multiple_errors",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "quantity_mismatch",
+        "price_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 2
+    },
+    {
+      "set_num": 90,
+      "po_ref": "PO-2026-3090",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "multiple_errors",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 91,
+      "po_ref": "PO-2026-3091",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "multiple_errors",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "quantity_mismatch",
+        "price_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 2
+    },
+    {
+      "set_num": 92,
+      "po_ref": "PO-2026-3092",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "multiple_errors",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "quantity_mismatch",
+        "price_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 2
+    },
+    {
+      "set_num": 93,
+      "po_ref": "PO-2026-3093",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "multiple_errors",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "quantity_mismatch",
+        "price_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 2
+    },
+    {
+      "set_num": 94,
+      "po_ref": "PO-2026-3094",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "multiple_errors",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "quantity_mismatch",
+        "price_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 2
+    },
+    {
+      "set_num": 95,
+      "po_ref": "PO-2026-3095",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "multiple_errors",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 96,
+      "po_ref": "PO-2026-3096",
+      "supplier_format": "meridian",
+      "expected_anomaly_type": "multiple_errors",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 97,
+      "po_ref": "PO-2026-3097",
+      "supplier_format": "vantage",
+      "expected_anomaly_type": "multiple_errors",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "quantity_mismatch",
+        "price_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 2
+    },
+    {
+      "set_num": 98,
+      "po_ref": "PO-2026-3098",
+      "supplier_format": "castlegate",
+      "expected_anomaly_type": "multiple_errors",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 99,
+      "po_ref": "PO-2026-3099",
+      "supplier_format": "northgate",
+      "expected_anomaly_type": "multiple_errors",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": false,
+      "detected_types": [],
+      "correct": false,
+      "num_anomalies": 0
+    },
+    {
+      "set_num": 100,
+      "po_ref": "PO-2026-3100",
+      "supplier_format": "coastal",
+      "expected_anomaly_type": "multiple_errors",
+      "expected_has_anomaly": true,
+      "detected_has_anomaly": true,
+      "detected_types": [
+        "quantity_mismatch"
+      ],
+      "correct": true,
+      "num_anomalies": 1
+    }
+  ]
+}
