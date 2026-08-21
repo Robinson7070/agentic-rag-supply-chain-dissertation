@@ -136,6 +136,19 @@ with st.sidebar:
         help="Structured Pipeline is deterministic. ReAct Agent uses GPT-4o reasoning."
     )
 
+    agent_query = ""
+    if agent_mode == "ReAct Agent":
+        agent_query = st.text_area(
+            "Ask anything (optional)",
+            height=90,
+            placeholder=(
+                "Leave blank to run standard verification, or ask:\n"
+                "Which supplier has the highest average unit price?\n"
+                "Compare PO-2026-2001 and PO-2026-2012\n"
+                "Are there any documents missing a delivery note?"
+            ),
+        )
+
     st.markdown("---")
     st.markdown("""
     **Architecture:**
@@ -511,10 +524,15 @@ with tab1:
                         from agent import create_agent
                         agent_exec = create_agent()
 
-                        query = (
-                            f"Please verify the supply chain documents for purchase order {selected_po}. "
-                            f"Check unit prices, quantities, totals and flag any discrepancies."
-                        )
+                        # Open-ended query if the user typed one, else default verification
+                        custom = agent_query.strip()
+                        if custom:
+                            query = custom
+                        else:
+                            query = (
+                                f"Please verify the supply chain documents for purchase order {selected_po}. "
+                                f"Check unit prices, quantities, totals and flag any discrepancies."
+                            )
 
                         result = agent_exec.invoke({"input": query})
                         output = result.get('output', 'No output')
