@@ -1,2 +1,7 @@
 .env
 vector_store/
+__pycache__/
+*.pyc
+.env
+venv/
+*.zip
