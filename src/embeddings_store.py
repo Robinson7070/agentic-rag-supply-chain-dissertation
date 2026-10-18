@@ -384,7 +384,7 @@ if __name__ == "__main__":
     import glob
     sys.path.insert(0, 'src')
     
-    from ingestion_pipeline_v2 import process_document
+    from ingestion_pipeline import process_document
     
     # Find all PDF files in the dataset
     pdf_files = sorted(glob.glob("data/**/*.pdf", recursive=True))

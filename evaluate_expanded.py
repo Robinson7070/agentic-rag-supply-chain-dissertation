@@ -27,7 +27,7 @@ sys.path.insert(0, 'src')
 
 import faiss
 from openai import OpenAI
-from ingestion_pipeline_v2 import process_document
+from ingestion_pipeline import process_document
 
 client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
