@@ -62,7 +62,7 @@ Two intervention points rather than one: mid-retrieval, when the agent's confide
 
 ## Stack
 
-Python · LangChain/LangGraph · OpenAI GPT-4o · FAISS · pdfplumber · Streamlit (evaluation dashboard)
+Python · LangChain · OpenAI GPT-4o · FAISS · pdfplumber · Streamlit (evaluation dashboard)
 
 ## Running it
 
