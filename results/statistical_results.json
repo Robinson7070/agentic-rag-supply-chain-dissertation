@@ -1,0 +1,66 @@
+{
+  "basic_metrics": {
+    "tp": 15,
+    "tn": 5,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "accuracy": 1.0
+  },
+  "bootstrap_ci": {
+    "f1": {
+      "mean": 1.0,
+      "ci_low": 1.0,
+      "ci_high": 1.0
+    },
+    "precision": {
+      "mean": 1.0,
+      "ci_low": 1.0,
+      "ci_high": 1.0
+    },
+    "recall": {
+      "mean": 1.0,
+      "ci_low": 1.0,
+      "ci_high": 1.0
+    },
+    "accuracy": {
+      "mean": 1.0,
+      "ci_low": 1.0,
+      "ci_high": 1.0
+    }
+  },
+  "wilson_ci": {
+    "precision": {
+      "low": 0.7961166989641515,
+      "high": 1.0
+    },
+    "recall": {
+      "low": 0.7961166989641515,
+      "high": 1.0
+    },
+    "accuracy": {
+      "low": 0.8388748419471806,
+      "high": 1.0
+    }
+  },
+  "mcnemar": {
+    "statistic": null,
+    "pvalue": 0.5,
+    "contingency_table": [
+      [
+        4,
+        0
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "significant": false
+  },
+  "cohens_kappa": 1.0,
+  "n_samples": 20,
+  "n_bootstrap": 10000
+}

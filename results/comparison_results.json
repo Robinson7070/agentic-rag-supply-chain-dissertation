@@ -1,0 +1,74 @@
+[
+  {
+    "po_ref": "PO-2026-2001",
+    "ground_truth_anomaly": true,
+    "ground_truth_type": "price_mismatch",
+    "ground_truth_detail": "VP-204: PO \u00a342.00 vs Invoice \u00a346.50",
+    "trad_detected": true,
+    "trad_correct": true,
+    "trad_time": 2.86,
+    "trad_tokens": 686,
+    "trad_chunks": 4,
+    "trad_response": "ANOMALY DETECTED. The unit price on the purchase order (PO-2026-2001) is \u00a342.00, while the unit price on the invoice (INV-MV-8102) is \u00a346.50. The quantities match, but the unit prices do not."
+  },
+  {
+    "po_ref": "PO-2026-2002",
+    "ground_truth_anomaly": true,
+    "ground_truth_type": "price_mismatch",
+    "ground_truth_detail": "FS-118: PO \u00a3165.00 vs Invoice \u00a3178.00",
+    "trad_detected": true,
+    "trad_correct": true,
+    "trad_time": 1.56,
+    "trad_tokens": 154,
+    "trad_chunks": 0,
+    "trad_response": "ANOMALY DETECTED. The unit price on the invoice for PO-2026-2002 is $15.00, whereas the purchase order lists the unit price as $14.50."
+  },
+  {
+    "po_ref": "PO-2026-2004",
+    "ground_truth_anomaly": true,
+    "ground_truth_type": "quantity_mismatch",
+    "ground_truth_detail": "EC-902: ordered 18 delivered 15",
+    "trad_detected": true,
+    "trad_correct": true,
+    "trad_time": 1.71,
+    "trad_tokens": 653,
+    "trad_chunks": 4,
+    "trad_response": "ANOMALY DETECTED. The delivery note indicates that 15 units of \"EC-902|Vehicle Battery 12V 90Ah\" were delivered, but there is a note stating that there were 3 units short of the order quantity. This suggests that the ordered quantity was 18 units, but only 15 were delivered. The supplier was notified of this shortfall on 14/04/2026."
+  },
+  {
+    "po_ref": "PO-2026-1001",
+    "ground_truth_anomaly": false,
+    "ground_truth_type": null,
+    "ground_truth_detail": "Consistent",
+    "trad_detected": false,
+    "trad_correct": true,
+    "trad_time": 0.75,
+    "trad_tokens": 802,
+    "trad_chunks": 4,
+    "trad_response": "CONSISTENT"
+  },
+  {
+    "po_ref": "PO-2026-1002",
+    "ground_truth_anomaly": false,
+    "ground_truth_type": null,
+    "ground_truth_detail": "Consistent",
+    "trad_detected": true,
+    "trad_correct": false,
+    "trad_time": 2.0,
+    "trad_tokens": 435,
+    "trad_chunks": 1,
+    "trad_response": "To verify the invoice for PO-2026-1002 matches the purchase order, we need to compare the details from the purchase order with those on the invoice. However, the provided context only includes details from the purchase order and does not include any information from an invoice. Therefore, based on the available information, it is not possible to determine if there is consistency or an anomaly between the purchase order and the invoice.\n\nWithout the invoice details, we cannot perform the verification. Please provide the invoice details for a complete comparison.\n\nCurrent status: INSUFFICIENT DATA TO VERIFY."
+  },
+  {
+    "po_ref": "PO-2026-2007",
+    "ground_truth_anomaly": true,
+    "ground_truth_type": "missing_document",
+    "ground_truth_detail": "Delivery note missing",
+    "trad_detected": false,
+    "trad_correct": false,
+    "trad_time": 0.79,
+    "trad_tokens": 607,
+    "trad_chunks": 4,
+    "trad_response": "CONSISTENT"
+  }
+]

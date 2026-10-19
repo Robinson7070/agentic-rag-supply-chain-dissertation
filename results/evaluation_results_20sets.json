@@ -1,0 +1,1270 @@
+[
+  {
+    "po_ref": "PO-2026-1001",
+    "timestamp": "2026-07-24T11:56:51.066237",
+    "consistent": true,
+    "anomalies": [],
+    "documents_checked": [
+      "purchase_order",
+      "invoice",
+      "delivery_note"
+    ],
+    "missing_documents": [],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-1001",
+        "items": [
+          {
+            "code": "VP-204",
+            "quantity": 50,
+            "unit_price": 42.0,
+            "line_total": 2100.0,
+            "raw_text": "VP-204 Brake Pad Set (Front) 50 42.00"
+          },
+          {
+            "code": "VP-311",
+            "quantity": 100,
+            "unit_price": 8.5,
+            "line_total": 850.0,
+            "raw_text": "VP-311 Oil Filter Standard 100 8.50"
+          }
+        ],
+        "total": 3540.0
+      },
+      {
+        "step": "Invoice retrieval",
+        "invoice_ref": "INV-MV-7741",
+        "items": [
+          {
+            "code": "VP-204",
+            "quantity": 50,
+            "unit_price": 42.0,
+            "line_total": 2100.0,
+            "raw_text": "VP-204 Brake Pad Set (Front) 50 42.00"
+          },
+          {
+            "code": "VP-311",
+            "quantity": 100,
+            "unit_price": 8.5,
+            "line_total": 850.0,
+            "raw_text": "VP-311 Oil Filter Standard 100 8.50"
+          }
+        ],
+        "total": 3540.0
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "DN-9921",
+        "items": [
+          {
+            "code": "VP-204",
+            "quantity": 50,
+            "quantity_ordered": 50,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "VP-204 Brake Pad Set (Front) 50 50 Good",
+            "note": "qty_delivered"
+          },
+          {
+            "code": "VP-311",
+            "quantity": 100,
+            "quantity_ordered": 100,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "VP-311 Oil Filter Standard 100 100 Good",
+            "note": "qty_delivered"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-1002",
+    "timestamp": "2026-07-24T11:56:52.447626",
+    "consistent": true,
+    "anomalies": [],
+    "documents_checked": [
+      "purchase_order",
+      "invoice",
+      "delivery_note"
+    ],
+    "missing_documents": [],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-1002",
+        "items": [
+          {
+            "code": "FS-118",
+            "quantity": 12,
+            "unit_price": 165.0,
+            "line_total": 1980.0,
+            "raw_text": "FS-118 \u2014 Diesel Fuel Pump\nQuantity: 12 units Price each: \u00a3165.00"
+          },
+          {
+            "code": "FS-220",
+            "quantity": 40,
+            "unit_price": 14.25,
+            "line_total": 570.0,
+            "raw_text": "FS-220 \u2014 Fuel Filter Cartridge\nQuantity: 40 units Price each: \u00a314.25"
+          }
+        ],
+        "total": 3060.0
+      },
+      {
+        "step": "Invoice retrieval",
+        "invoice_ref": "INV-CF-3389",
+        "items": [
+          {
+            "code": "FS-118",
+            "quantity": 12,
+            "unit_price": 165.0,
+            "line_total": 1980.0,
+            "raw_text": "FS-118) 12 165.00"
+          },
+          {
+            "code": "FS-220",
+            "quantity": 40,
+            "unit_price": 14.25,
+            "line_total": 570.0,
+            "raw_text": "FS-220) 40 14.25"
+          }
+        ],
+        "total": 3060.0
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "DN-9933",
+        "items": [
+          {
+            "code": "FS-118",
+            "quantity": 12,
+            "quantity_ordered": 12,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "FS-118 Diesel Fuel Pump 12 12 Good",
+            "note": "qty_delivered"
+          },
+          {
+            "code": "FS-220",
+            "quantity": 40,
+            "quantity_ordered": 40,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "FS-220 Fuel Filter Cartridge 40 40 Good",
+            "note": "qty_delivered"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-1003",
+    "timestamp": "2026-07-24T11:56:53.534578",
+    "consistent": true,
+    "anomalies": [],
+    "documents_checked": [
+      "purchase_order",
+      "invoice",
+      "delivery_note"
+    ],
+    "missing_documents": [],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-1003",
+        "items": [
+          {
+            "code": "TY-440",
+            "quantity": 24,
+            "unit_price": 210.0,
+            "line_total": 5040.0,
+            "raw_text": "24\n(twenty-four) units of Commercial Tyre 22.5\" (product code TY-440), at a unit price of \u00a3210.00"
+          }
+        ],
+        "total": 6048.0
+      },
+      {
+        "step": "Invoice retrieval",
+        "invoice_ref": "INV-NT-5512",
+        "items": [
+          {
+            "code": "TY-440",
+            "quantity": 24,
+            "unit_price": 210.0,
+            "line_total": 5040.0,
+            "raw_text": "24 units of Commercial Tyre 22.5\" (TY-440) at \u00a3210.00"
+          }
+        ],
+        "total": 6048.0
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "DN-9947",
+        "items": [
+          {
+            "code": "TY-440",
+            "quantity": 24,
+            "quantity_ordered": 24,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "TY-440 Commercial Tyre 22.5\" 24 24 Good",
+            "note": "qty_delivered"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-1004",
+    "timestamp": "2026-07-24T11:56:54.659163",
+    "consistent": true,
+    "anomalies": [],
+    "documents_checked": [
+      "purchase_order",
+      "invoice",
+      "delivery_note"
+    ],
+    "missing_documents": [],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-1004",
+        "items": [
+          {
+            "code": "EC-902",
+            "quantity": 18,
+            "unit_price": 95.0,
+            "line_total": 1710.0,
+            "raw_text": "EC-902|Vehicle Battery 12V 90Ah|18|95.00|1710.00"
+          },
+          {
+            "code": "EC-150",
+            "quantity": 30,
+            "unit_price": 22.0,
+            "line_total": 660.0,
+            "raw_text": "EC-150|Alternator Belt Kit|30|22.00|660.00"
+          }
+        ],
+        "total": 2844.0
+      },
+      {
+        "step": "Invoice retrieval",
+        "invoice_ref": "INV-VE-8804",
+        "items": [
+          {
+            "code": "EC-902",
+            "quantity": 18,
+            "unit_price": 95.0,
+            "line_total": 1710.0,
+            "raw_text": "EC-902|Vehicle Battery 12V 90Ah|18|95.00|1710.00"
+          },
+          {
+            "code": "EC-150",
+            "quantity": 30,
+            "unit_price": 22.0,
+            "line_total": 660.0,
+            "raw_text": "EC-150|Alternator Belt Kit|30|22.00|660.00"
+          }
+        ],
+        "total": 2844.0
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "DN-9958",
+        "items": [
+          {
+            "code": "EC-902",
+            "quantity": 18,
+            "quantity_ordered": 18,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "EC-902 Vehicle Battery 12V 90Ah 18 18 GOOD",
+            "note": "qty_delivered"
+          },
+          {
+            "code": "EC-150",
+            "quantity": 30,
+            "quantity_ordered": 30,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "EC-150 Alternator Belt Kit 30 30 GOOD",
+            "note": "qty_delivered"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-1005",
+    "timestamp": "2026-07-24T11:56:55.783189",
+    "consistent": true,
+    "anomalies": [],
+    "documents_checked": [
+      "purchase_order",
+      "invoice",
+      "delivery_note"
+    ],
+    "missing_documents": [],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-1005",
+        "items": [],
+        "total": null
+      },
+      {
+        "step": "Invoice retrieval",
+        "invoice_ref": "NOT_FOUND",
+        "items": [],
+        "total": null
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "NOT_FOUND",
+        "items": [
+          {
+            "code": "FL-077",
+            "quantity": null,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "FL-077"
+          },
+          {
+            "code": "FL-310",
+            "quantity": null,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "FL-310"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-2001",
+    "timestamp": "2026-07-24T11:56:56.880117",
+    "consistent": false,
+    "anomalies": [
+      {
+        "type": "price_mismatch",
+        "item_code": "VP-204",
+        "po_value": 42.0,
+        "inv_value": 46.5,
+        "details": "VP-204: PO \u00a342.0 vs Invoice \u00a346.5"
+      },
+      {
+        "type": "total_mismatch",
+        "po_value": 2016.0,
+        "inv_value": 2232.0,
+        "details": "Total: PO \u00a32016.0 vs Invoice \u00a32232.0"
+      }
+    ],
+    "documents_checked": [
+      "purchase_order",
+      "invoice",
+      "delivery_note"
+    ],
+    "missing_documents": [],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-2001",
+        "items": [
+          {
+            "code": "VP-204",
+            "quantity": 40,
+            "unit_price": 42.0,
+            "line_total": 1680.0,
+            "raw_text": "VP-204 Brake Pad Set (Front) 40 42.00"
+          }
+        ],
+        "total": 2016.0
+      },
+      {
+        "step": "Invoice retrieval",
+        "invoice_ref": "INV-MV-8102",
+        "items": [
+          {
+            "code": "VP-204",
+            "quantity": 40,
+            "unit_price": 46.5,
+            "line_total": 1860.0,
+            "raw_text": "VP-204 Brake Pad Set (Front) 40 46.50"
+          }
+        ],
+        "total": 2232.0
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "DN-9102",
+        "items": [
+          {
+            "code": "VP-204",
+            "quantity": 40,
+            "quantity_ordered": 40,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "VP-204 Brake Pad Set (Front) 40 40 Good",
+            "note": "qty_delivered"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-2002",
+    "timestamp": "2026-07-24T11:56:58.126558",
+    "consistent": false,
+    "anomalies": [
+      {
+        "type": "price_mismatch",
+        "item_code": "FS-118",
+        "po_value": 165.0,
+        "inv_value": 178.0,
+        "details": "FS-118: PO \u00a3165.0 vs Invoice \u00a3178.0"
+      },
+      {
+        "type": "total_mismatch",
+        "po_value": 1980.0,
+        "inv_value": 2136.0,
+        "details": "Total: PO \u00a31980.0 vs Invoice \u00a32136.0"
+      }
+    ],
+    "documents_checked": [
+      "purchase_order",
+      "invoice",
+      "delivery_note"
+    ],
+    "missing_documents": [],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-2002",
+        "items": [
+          {
+            "code": "FS-118",
+            "quantity": 10,
+            "unit_price": 165.0,
+            "line_total": 1650.0,
+            "raw_text": "FS-118 \u2014 Diesel Fuel Pump\nQuantity: 10 units Price each: \u00a3165.00"
+          }
+        ],
+        "total": 1980.0
+      },
+      {
+        "step": "Invoice retrieval",
+        "invoice_ref": "INV-CF-4410",
+        "items": [
+          {
+            "code": "FS-118",
+            "quantity": 10,
+            "unit_price": 178.0,
+            "line_total": 1780.0,
+            "raw_text": "FS-118) 10 178.00"
+          }
+        ],
+        "total": 2136.0
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "DN-9410",
+        "items": [
+          {
+            "code": "FS-118",
+            "quantity": 10,
+            "quantity_ordered": 10,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "(cid:127) Diesel Fuel Pump (FS-118): 10 of 10 ordered",
+            "note": "qty_delivered"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-2003",
+    "timestamp": "2026-07-24T11:56:59.624763",
+    "consistent": false,
+    "anomalies": [
+      {
+        "type": "price_mismatch",
+        "item_code": "TY-440",
+        "po_value": 210.0,
+        "inv_value": 225.0,
+        "details": "TY-440: PO \u00a3210.0 vs Invoice \u00a3225.0"
+      },
+      {
+        "type": "total_mismatch",
+        "po_value": 5040.0,
+        "inv_value": 5400.0,
+        "details": "Total: PO \u00a35040.0 vs Invoice \u00a35400.0"
+      }
+    ],
+    "documents_checked": [
+      "purchase_order",
+      "invoice",
+      "delivery_note"
+    ],
+    "missing_documents": [],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-2003",
+        "items": [
+          {
+            "code": "TY-440",
+            "quantity": 20,
+            "unit_price": 210.0,
+            "line_total": 4200.0,
+            "raw_text": "20 (twenty)\nunits of Commercial Tyre 22.5\" (product code TY-440), at a unit price of \u00a3210.00"
+          }
+        ],
+        "total": 5040.0
+      },
+      {
+        "step": "Invoice retrieval",
+        "invoice_ref": "INV-NT-6620",
+        "items": [
+          {
+            "code": "TY-440",
+            "quantity": 20,
+            "unit_price": 225.0,
+            "line_total": 4500.0,
+            "raw_text": "20 units of Commercial Tyre 22.5\" (TY-440) at \u00a3225.00"
+          }
+        ],
+        "total": 5400.0
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "NOT_FOUND",
+        "items": [
+          {
+            "code": "TY-440",
+            "quantity": 20,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "20 units of Commercial Tyre 22.5\" (TY-440) \u2014 all 20 received",
+            "note": "qty_delivered"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-2004",
+    "timestamp": "2026-07-24T11:57:00.839120",
+    "consistent": false,
+    "anomalies": [
+      {
+        "type": "quantity_mismatch",
+        "item_code": "EC-902",
+        "po_value": 18,
+        "dn_value": 15,
+        "details": "EC-902: ordered 18 vs delivered 15"
+      }
+    ],
+    "documents_checked": [
+      "purchase_order",
+      "invoice",
+      "delivery_note"
+    ],
+    "missing_documents": [],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-2004",
+        "items": [
+          {
+            "code": "EC-902",
+            "quantity": 18,
+            "unit_price": 95.0,
+            "line_total": 1710.0,
+            "raw_text": "EC-902|Vehicle Battery 12V 90Ah|18|95.00|1710.00"
+          }
+        ],
+        "total": 2052.0
+      },
+      {
+        "step": "Invoice retrieval",
+        "invoice_ref": "INV-VE-9215",
+        "items": [
+          {
+            "code": "EC-902",
+            "quantity": 18,
+            "unit_price": 95.0,
+            "line_total": 1710.0,
+            "raw_text": "EC-902|Vehicle Battery 12V 90Ah|18|95.00|1710.00"
+          }
+        ],
+        "total": 2052.0
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "DN-9215",
+        "items": [
+          {
+            "code": "EC-902",
+            "quantity": 15,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "EC-902|Vehicle Battery 12V 90Ah|15|GOOD",
+            "note": "qty_delivered"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-2005",
+    "timestamp": "2026-07-24T11:57:01.942353",
+    "consistent": false,
+    "anomalies": [
+      {
+        "type": "quantity_mismatch",
+        "item_code": "FL-077",
+        "po_value": 60,
+        "dn_value": 50,
+        "details": "FL-077: ordered 60 vs delivered 50"
+      }
+    ],
+    "documents_checked": [
+      "purchase_order",
+      "invoice",
+      "delivery_note"
+    ],
+    "missing_documents": [],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-2005",
+        "items": [
+          {
+            "code": "FL-077",
+            "quantity": 60,
+            "unit_price": 18.0,
+            "line_total": 1080.0,
+            "raw_text": "DT\nWiper sets x60 @ \u00a318 = \u00a31080\n(code FL-077)"
+          }
+        ],
+        "total": 1296.0
+      },
+      {
+        "step": "Invoice retrieval",
+        "invoice_ref": "NOT_FOUND",
+        "items": [
+          {
+            "code": "FL-077",
+            "quantity": 60,
+            "unit_price": 18.0,
+            "line_total": 1080.0,
+            "raw_text": "FL-077 Windscreen Wiper Set 60 @ \u00a318.00"
+          }
+        ],
+        "total": 1296.0
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "NOT_FOUND",
+        "items": [
+          {
+            "code": "FL-077",
+            "quantity": 50,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "(FL-077) - 50 only",
+            "note": "qty_delivered"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-2006",
+    "timestamp": "2026-07-24T11:57:03.094873",
+    "consistent": false,
+    "anomalies": [
+      {
+        "type": "quantity_mismatch",
+        "item_code": "VP-311",
+        "po_value": 100,
+        "dn_value": 110,
+        "details": "VP-311: ordered 100 vs delivered 110"
+      }
+    ],
+    "documents_checked": [
+      "purchase_order",
+      "invoice",
+      "delivery_note"
+    ],
+    "missing_documents": [],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-2006",
+        "items": [
+          {
+            "code": "VP-311",
+            "quantity": 100,
+            "unit_price": 8.5,
+            "line_total": 850.0,
+            "raw_text": "VP-311 Oil Filter Standard 100 8.50"
+          }
+        ],
+        "total": 1020.0
+      },
+      {
+        "step": "Invoice retrieval",
+        "invoice_ref": "INV-MV-9301",
+        "items": [
+          {
+            "code": "VP-311",
+            "quantity": 100,
+            "unit_price": 8.5,
+            "line_total": 850.0,
+            "raw_text": "VP-311 Oil Filter Standard 100 8.50"
+          }
+        ],
+        "total": 1020.0
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "DN-9301",
+        "items": [
+          {
+            "code": "VP-311",
+            "quantity": 110,
+            "quantity_ordered": 100,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "VP-311 Oil Filter Standard 100 110 Good",
+            "note": "qty_delivered"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-2007",
+    "timestamp": "2026-07-24T11:57:04.151408",
+    "consistent": false,
+    "anomalies": [
+      {
+        "type": "missing_document",
+        "document": "delivery_note",
+        "severity": "high"
+      }
+    ],
+    "documents_checked": [
+      "purchase_order",
+      "invoice"
+    ],
+    "missing_documents": [
+      "delivery_note"
+    ],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-2007",
+        "items": [
+          {
+            "code": "VP-204",
+            "quantity": 60,
+            "unit_price": 42.0,
+            "line_total": 2520.0,
+            "raw_text": "VP-204 Brake Pad Set (Front) 60 42.00"
+          }
+        ],
+        "total": 3024.0
+      },
+      {
+        "step": "Invoice retrieval",
+        "invoice_ref": "INV-MV-9450",
+        "items": [
+          {
+            "code": "VP-204",
+            "quantity": 60,
+            "unit_price": 42.0,
+            "line_total": 2520.0,
+            "raw_text": "VP-204 Brake Pad Set (Front) 60 42.00"
+          }
+        ],
+        "total": 3024.0
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-2008",
+    "timestamp": "2026-07-24T11:57:04.904636",
+    "consistent": false,
+    "anomalies": [
+      {
+        "type": "missing_document",
+        "document": "invoice",
+        "severity": "high"
+      }
+    ],
+    "documents_checked": [
+      "purchase_order",
+      "delivery_note"
+    ],
+    "missing_documents": [
+      "invoice"
+    ],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-2008",
+        "items": [
+          {
+            "code": "FS-220",
+            "quantity": 50,
+            "unit_price": 14.25,
+            "line_total": 712.5,
+            "raw_text": "FS-220 \u2014 Fuel Filter Cartridge\nQuantity: 50 units Price each: \u00a314.25"
+          }
+        ],
+        "total": 855.0
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "DN-9512",
+        "items": [
+          {
+            "code": "FS-220",
+            "quantity": 50,
+            "quantity_ordered": 50,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "(cid:127) Fuel Filter Cartridge (FS-220): 50 of 50 ordered",
+            "note": "qty_delivered"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-2009",
+    "timestamp": "2026-07-24T11:57:05.664669",
+    "consistent": false,
+    "anomalies": [
+      {
+        "type": "date_inconsistency",
+        "subtype": "delivery_before_po",
+        "details": "Delivery dated 15/04/2026 is before PO dated 20/04/2026"
+      }
+    ],
+    "documents_checked": [
+      "purchase_order",
+      "invoice",
+      "delivery_note"
+    ],
+    "missing_documents": [],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-2009",
+        "items": [
+          {
+            "code": "TY-440",
+            "quantity": 16,
+            "unit_price": 210.0,
+            "line_total": 3360.0,
+            "raw_text": "16 (sixteen)\nunits of Commercial Tyre 22.5\" (product code TY-440), at a unit price of \u00a3210.00"
+          }
+        ],
+        "total": 4032.0
+      },
+      {
+        "step": "Invoice retrieval",
+        "invoice_ref": "INV-NT-7740",
+        "items": [
+          {
+            "code": "TY-440",
+            "quantity": 16,
+            "unit_price": 210.0,
+            "line_total": 3360.0,
+            "raw_text": "16 units of Commercial Tyre 22.5\" (TY-440) at \u00a3210.00"
+          }
+        ],
+        "total": 4032.0
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "NOT_FOUND",
+        "items": [
+          {
+            "code": "TY-440",
+            "quantity": 16,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "16 units of Commercial Tyre 22.5\" (TY-440) \u2014 all 16 received",
+            "note": "qty_delivered"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-2010",
+    "timestamp": "2026-07-24T11:57:06.787477",
+    "consistent": false,
+    "anomalies": [
+      {
+        "type": "date_inconsistency",
+        "subtype": "invoice_before_po",
+        "details": "Invoice dated 18/04/2026 is before PO dated 22/04/2026"
+      }
+    ],
+    "documents_checked": [
+      "purchase_order",
+      "invoice",
+      "delivery_note"
+    ],
+    "missing_documents": [],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-2010",
+        "items": [
+          {
+            "code": "FL-310",
+            "quantity": 45,
+            "unit_price": 11.5,
+            "line_total": 517.5,
+            "raw_text": "DT\nCabin filters x45 @ \u00a311.50 = \u00a3517.50\n(code FL-310)"
+          }
+        ],
+        "total": 621.0
+      },
+      {
+        "step": "Invoice retrieval",
+        "invoice_ref": "NOT_FOUND",
+        "items": [
+          {
+            "code": "FL-310",
+            "quantity": 45,
+            "unit_price": 11.5,
+            "line_total": 517.5,
+            "raw_text": "DT\nCabin filters x45 @ \u00a311.50 = \u00a3517.50\n(code FL-310)"
+          }
+        ],
+        "total": 621.0
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "NOT_FOUND",
+        "items": [
+          {
+            "code": "FL-310",
+            "quantity": null,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "FL-310"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-2011",
+    "timestamp": "2026-07-24T11:57:07.904861",
+    "consistent": false,
+    "anomalies": [
+      {
+        "type": "quantity_mismatch",
+        "item_code": "EC-902",
+        "po_value": 10,
+        "inv_value": 12,
+        "details": "EC-902: PO qty 10 vs Invoice qty 12"
+      }
+    ],
+    "documents_checked": [
+      "purchase_order",
+      "invoice",
+      "delivery_note"
+    ],
+    "missing_documents": [],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-2011",
+        "items": [
+          {
+            "code": "EC-902",
+            "quantity": 10,
+            "unit_price": 95.0,
+            "line_total": 950.0,
+            "raw_text": "EC-902|Vehicle Battery 12V 90Ah|10|95.00|950.00"
+          }
+        ],
+        "total": 1140.0
+      },
+      {
+        "step": "Invoice retrieval",
+        "invoice_ref": "INV-VE-9988",
+        "items": [
+          {
+            "code": "EC-902",
+            "quantity": 12,
+            "unit_price": 95.0,
+            "line_total": 1140.0,
+            "raw_text": "EC-902 Vehicle Battery 12V 90Ah 12 95.00"
+          }
+        ],
+        "total": 1140.0
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "DN-9988",
+        "items": [
+          {
+            "code": "EC-902",
+            "quantity": 10,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "EC-902|Vehicle Battery 12V 90Ah|10|GOOD",
+            "note": "qty_delivered"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-2012",
+    "timestamp": "2026-07-24T11:57:08.988850",
+    "consistent": false,
+    "anomalies": [
+      {
+        "type": "price_mismatch",
+        "item_code": "VP-204",
+        "po_value": 42.0,
+        "inv_value": 45.0,
+        "details": "VP-204: PO \u00a342.0 vs Invoice \u00a345.0"
+      },
+      {
+        "type": "total_mismatch",
+        "po_value": 1512.0,
+        "inv_value": 1620.0,
+        "details": "Total: PO \u00a31512.0 vs Invoice \u00a31620.0"
+      },
+      {
+        "type": "quantity_mismatch",
+        "item_code": "VP-204",
+        "po_value": 30,
+        "dn_value": 26,
+        "details": "VP-204: ordered 30 vs delivered 26"
+      }
+    ],
+    "documents_checked": [
+      "purchase_order",
+      "invoice",
+      "delivery_note"
+    ],
+    "missing_documents": [],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-2012",
+        "items": [
+          {
+            "code": "VP-204",
+            "quantity": 30,
+            "unit_price": 42.0,
+            "line_total": 1260.0,
+            "raw_text": "VP-204 Brake Pad Set (Front) 30 42.00"
+          }
+        ],
+        "total": 1512.0
+      },
+      {
+        "step": "Invoice retrieval",
+        "invoice_ref": "INV-MV-1102",
+        "items": [
+          {
+            "code": "VP-204",
+            "quantity": 30,
+            "unit_price": 45.0,
+            "line_total": 1350.0,
+            "raw_text": "VP-204 Brake Pad Set (Front) 30 45.00"
+          }
+        ],
+        "total": 1620.0
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "DN-9602",
+        "items": [
+          {
+            "code": "VP-204",
+            "quantity": 26,
+            "quantity_ordered": 30,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "VP-204 Brake Pad Set (Front) 30 26 Good",
+            "note": "qty_delivered"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-2013",
+    "timestamp": "2026-07-24T11:57:10.136685",
+    "consistent": false,
+    "anomalies": [
+      {
+        "type": "missing_document",
+        "document": "invoice",
+        "severity": "high"
+      }
+    ],
+    "documents_checked": [
+      "purchase_order",
+      "delivery_note"
+    ],
+    "missing_documents": [
+      "invoice"
+    ],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-2013",
+        "items": [
+          {
+            "code": "FS-118",
+            "quantity": 8,
+            "unit_price": 165.0,
+            "line_total": 1320.0,
+            "raw_text": "FS-118 \u2014 Diesel Fuel Pump\nQuantity: 8 units Price each: \u00a3165.00"
+          }
+        ],
+        "total": 1584.0
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "DN-9803",
+        "items": [
+          {
+            "code": "FS-118",
+            "quantity": 8,
+            "quantity_ordered": 8,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "(cid:127) Diesel Fuel Pump (FS-118): 8 of 8 ordered",
+            "note": "qty_delivered"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "PO-2026-2014",
+    "timestamp": "2026-07-24T11:57:10.794737",
+    "consistent": false,
+    "anomalies": [
+      {
+        "type": "total_mismatch",
+        "po_value": 720.0,
+        "inv_value": 960.0,
+        "details": "Total: PO \u00a3720.0 vs Invoice \u00a3960.0"
+      },
+      {
+        "type": "date_inconsistency",
+        "subtype": "invoice_before_po",
+        "details": "Invoice dated 09/05/2026 is before PO dated 12/05/2026"
+      }
+    ],
+    "documents_checked": [
+      "purchase_order",
+      "invoice",
+      "delivery_note"
+    ],
+    "missing_documents": [],
+    "verification_details": [
+      {
+        "step": "PO retrieval",
+        "po_ref": "PO-2026-2014",
+        "items": [
+          {
+            "code": "FL-077",
+            "quantity": null,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "FL-077"
+          }
+        ],
+        "total": 720.0
+      },
+      {
+        "step": "Invoice retrieval",
+        "invoice_ref": "NOT_FOUND",
+        "items": [
+          {
+            "code": "FL-077",
+            "quantity": 40,
+            "unit_price": 20.0,
+            "line_total": 800.0,
+            "raw_text": "FL-077 Windscreen Wiper Set 40 @ \u00a320.00"
+          }
+        ],
+        "total": 960.0
+      },
+      {
+        "step": "DN retrieval",
+        "dn_ref": "NOT_FOUND",
+        "items": [
+          {
+            "code": "FL-077",
+            "quantity": 35,
+            "unit_price": null,
+            "line_total": null,
+            "raw_text": "(FL-077) - 35 only",
+            "note": "qty_delivered"
+          }
+        ]
+      }
+    ],
+    "hitl_triggered": false
+  },
+  {
+    "po_ref": "NOT_PROVIDED",
+    "consistent": false,
+    "anomalies": [
+      {
+        "type": "missing_document",
+        "document": "purchase_order",
+        "severity": "high"
+      }
+    ],
+    "documents_checked": [
+      "delivery_note",
+      "delivery_note"
+    ],
+    "missing_documents": [
+      "purchase_order"
+    ],
+    "hitl_triggered": false
+  }
+]

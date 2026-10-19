@@ -183,7 +183,8 @@ def run_comparison_evaluation():
         })
 
     # Save results
-    with open("vector_store/comparison_results.json", 'w') as f:
+    os.makedirs("results", exist_ok=True)
+    with open("results/comparison_results.json", 'w', encoding='utf-8') as f:
         json.dump(results, f, indent=2)
 
     # Summary
@@ -199,15 +200,19 @@ def run_comparison_evaluation():
     print(f"Avg time:      {avg_time:.2f}s per query")
     print(f"Avg tokens:    {avg_tokens:.0f} per query")
     print()
-    print("AGENTIC RAG RESULTS (from full evaluation):")
-    print(f"Accuracy:      19/20 = 95% (F1: 0.974)")
-    print(f"Precision:     100% (zero false positives)")
-    print(f"Missing docs:  Detected")
-    print(f"Date checks:   Detected")
-    print(f"HITL:          Yes")
-    print(f"Traceability:  Yes")
+    print("AGENTIC RAG RESULTS (computed from the 20-set evaluation results file):")
+    _results_file = next((p for p in ("results/evaluation_results_20sets.json",
+                                      "vector_store/evaluation_results.json") if os.path.exists(p)), None)
+    if _results_file:
+        from metrics_utils import binary_metrics, load_results
+        _m = binary_metrics(load_results(_results_file))
+        print(f"Set-level accuracy: {_m['tp'] + _m['tn']}/{_m['n']} = {_m['accuracy']*100:.0f}% (F1: {_m['f1']:.3f})")
+        print(f"Precision:          {_m['precision']*100:.0f}% ({_m['fp']} false positives)")
+    else:
+        print("No 20-set evaluation results file found; run the full evaluation first.")
+    print("Note: the baseline was run on 6 cases only, so this is not a like-for-like comparison.")
     print()
-    print("Results saved to vector_store/comparison_results.json")
+    print("Results saved to results/comparison_results.json")
     
     return results
 

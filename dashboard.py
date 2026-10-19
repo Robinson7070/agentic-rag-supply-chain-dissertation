@@ -13,6 +13,7 @@ from pathlib import Path
 from datetime import datetime
 
 sys.path.insert(0, 'src')
+from metrics_utils import binary_metrics
 
 st.set_page_config(
     page_title="Supply Chain Document Intelligence",
@@ -80,20 +81,29 @@ def load_system():
         return None, None, None, str(e)
 
 
+def _first_existing(*candidates):
+    for candidate in candidates:
+        if Path(candidate).exists():
+            return Path(candidate)
+    return None
+
+
 @st.cache_data
 def load_evaluation_results():
-    results_path = Path("vector_store/evaluation_results.json")
-    if results_path.exists():
-        with open(results_path, 'r') as f:
+    # Committed 20-set results first; fall back to a locally generated vector_store/ copy.
+    results_path = _first_existing("results/evaluation_results_20sets.json",
+                                   "vector_store/evaluation_results.json")
+    if results_path:
+        with open(results_path, 'r', encoding='utf-8') as f:
             return json.load(f)
     return []
 
 
 @st.cache_data
 def load_anomaly_log():
-    log_path = Path("vector_store/anomaly_log.json")
-    if log_path.exists():
-        with open(log_path, 'r') as f:
+    log_path = _first_existing("results/anomaly_log.json", "vector_store/anomaly_log.json")
+    if log_path:
+        with open(log_path, 'r', encoding='utf-8') as f:
             return json.load(f)
     return []
 
@@ -172,7 +182,7 @@ tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs([
 # TAB 0 — EXECUTIVE DASHBOARD
 with tab0:
     st.markdown("### Executive Summary")
-    st.markdown("Real-time overview of supply chain document verification operations")
+    st.markdown("Overview of the dissertation evaluation run (20 synthetic document sets)")
 
     eval_results = load_evaluation_results()
     anomaly_log = load_anomaly_log()
@@ -186,20 +196,24 @@ with tab0:
     high_risk = [a for a in all_anomalies if a.get('severity') == 'high']
     confirmed = [a for a in all_anomalies if a.get('status') == 'confirmed_by_reviewer']
 
-    # Financial impact calculation
-    financial_impact = 0.0
+    # Financial impact: one figure per (PO, document pair). A single price error is logged
+    # both as a unit-price mismatch and as a total mismatch (the total includes VAT), so only
+    # the largest amount per document pair is counted, to avoid double counting.
+    import re
+    impact_by_pair = {}
     for anomaly in all_anomalies:
-        impact_str = anomaly.get('impact', '')
-        import re
-        amount = re.search(r'£([\d,]+\.?\d*)', impact_str)
+        amount = re.search(r'£([\d,]+\.?\d*)', anomaly.get('impact', ''))
         if amount:
             try:
-                financial_impact += float(amount.group(1).replace(',', ''))
-            except:
-                pass
+                value = float(amount.group(1).replace(',', ''))
+            except ValueError:
+                continue
+            key = (anomaly.get('po_ref'), anomaly.get('document1'), anomaly.get('document2'))
+            impact_by_pair[key] = max(impact_by_pair.get(key, 0.0), value)
+    financial_impact = sum(impact_by_pair.values())
 
-    # Estimated processing time (seconds per document set)
-    avg_processing_time = 4.2  # seconds per set based on evaluation run
+    # Set-level metrics, computed from the results file (see src/metrics_utils.py)
+    set_metrics = binary_metrics(eval_results) if eval_results else None
 
     st.markdown("---")
 
@@ -213,12 +227,13 @@ with tab0:
             help="Total purchase order document sets verified"
         )
     with c2:
-        detection_rate = f"{len(anomaly_sets)/total_pos*100:.0f}%" if total_pos > 0 else "0%"
+        flagged_share = f"{len(anomaly_sets)/total_pos*100:.0f}%" if total_pos > 0 else "0%"
         st.metric(
-            "Anomalies Detected",
+            "Anomaly Sets Flagged",
             len(anomaly_sets),
-            delta=f"{detection_rate} detection rate",
-            help="Document sets with at least one anomaly"
+            delta=f"{flagged_share} of sets flagged",
+            delta_color="off",
+            help="Document sets the system flagged as containing at least one anomaly"
         )
     with c3:
         st.metric(
@@ -246,29 +261,38 @@ with tab0:
         st.metric(
             "Estimated Financial Impact",
             f"£{financial_impact:,.2f}",
-            help="Total value of detected discrepancies across all anomalies"
+            help="Largest discrepancy per document pair, summed across the log (price and total mismatches on the same invoice are not double counted)"
         )
     with c2:
         st.metric(
-            "Avg Processing Time",
-            f"{avg_processing_time:.1f}s",
-            delta="per document set",
-            help="Average time to verify one complete document set"
+            "Consistent Sets",
+            len(consistent_sets),
+            delta="no anomalies flagged",
+            delta_color="off",
+            help="Document sets the system judged internally consistent"
         )
     with c3:
-        st.metric(
-            "System Precision",
-            "100%",
-            delta="Zero false positives",
-            help="No correct document sets were incorrectly flagged"
-        )
+        if set_metrics:
+            st.metric(
+                "Set-level Precision",
+                f"{set_metrics['precision']:.0%}",
+                delta=f"{set_metrics['fp']} false positives",
+                delta_color="off",
+                help="Of the sets flagged as anomalous, the share that really were (computed from the results file)"
+            )
+        else:
+            st.metric("Set-level Precision", "n/a", help="No results file found")
     with c4:
-        st.metric(
-            "System Recall",
-            "95%",
-            delta="F1 Score: 0.974",
-            help="Percentage of actual anomalies successfully detected"
-        )
+        if set_metrics:
+            st.metric(
+                "Set-level Recall",
+                f"{set_metrics['recall']:.0%}",
+                delta=f"F1 Score: {set_metrics['f1']:.3f}",
+                delta_color="off",
+                help="Of the sets that really contain anomalies, the share the system flagged (computed from the results file)"
+            )
+        else:
+            st.metric("Set-level Recall", "n/a", help="No results file found")
 
     st.markdown("---")
 
@@ -640,16 +664,21 @@ with tab2:
         c2.metric("Anomaly Sets", len(anomaly_sets))
         c3.metric("Consistent Sets", len(consistent_sets))
         c4.metric("Total Anomalies", total_anomalies)
-        c5.metric("F1 Score", "0.974")
+        c5.metric("Set-level F1", f"{binary_metrics(eval_results)['f1']:.3f}")
 
         st.markdown("---")
         col1, col2 = st.columns(2)
 
         with col1:
             st.markdown("### Performance Metrics")
+            m = binary_metrics(eval_results)
+            st.caption("Set-level results (anomalous vs consistent) on 20 synthetic sets, computed from the results "
+                       "file. Anomaly-type identification metrics are reported in the dissertation and are not "
+                       "recomputed here.")
             for metric, value in {
-                "Precision": "100%", "Recall": "95%", "F1 Score": "0.974",
-                "True Negatives": "5/5 (100%)", "True Positives": "19/20 (95%)", "False Positives": "0"
+                "Precision": f"{m['precision']:.0%}", "Recall": f"{m['recall']:.0%}", "F1 Score": f"{m['f1']:.3f}",
+                "True Negatives": f"{m['tn']}/{m['tn'] + m['fp']}", "True Positives": f"{m['tp']}/{m['tp'] + m['fn']}",
+                "False Positives": str(m['fp'])
             }.items():
                 st.markdown(f'<div class="metric-card"><strong>{metric}:</strong> {value}</div>', unsafe_allow_html=True)
 
@@ -685,9 +714,9 @@ with tab3:
     st.markdown("Empirical comparison demonstrating the value of the agentic approach")
 
     # Load comparison results
-    comp_path = Path("vector_store/comparison_results.json")
-    
-    if not comp_path.exists():
+    comp_path = _first_existing("results/comparison_results.json", "vector_store/comparison_results.json")
+
+    if not comp_path:
         st.info("No comparison results found.")
         if st.button("Run Traditional RAG Evaluation"):
             with st.spinner("Running traditional RAG baseline on 6 test cases... (takes ~30 seconds)"):
@@ -699,7 +728,7 @@ with tab3:
                 except Exception as e:
                     st.error(f"Error: {str(e)}")
     else:
-        with open(comp_path) as f:
+        with open(comp_path, encoding='utf-8') as f:
             comp_results = json.load(f)
 
         # Summary metrics comparison
@@ -707,19 +736,24 @@ with tab3:
         col1, col2 = st.columns(2)
 
         with col1:
-            st.markdown("""
+            _n = len(comp_results)
+            _trad_ok = sum(1 for r in comp_results if r['trad_detected'] == r['ground_truth_anomaly'])
+            _trad_fp = sum(1 for r in comp_results if r['trad_detected'] and not r['ground_truth_anomaly'])
+            _trad_acc = f"{_trad_ok / _n:.0%}" if _n else "n/a"
+            _trad_time = sum(r.get('trad_time', 0) for r in comp_results) / _n if _n else 0
+            _trad_tok = sum(r.get('trad_tokens', 0) for r in comp_results) / _n if _n else 0
+            st.markdown(f"""
             <div style="background:#fff5f5; border:2px solid #e53e3e;
                         padding:20px; border-radius:10px; text-align:center;">
                 <h3 style="color:#e53e3e; margin:0">Traditional RAG</h3>
                 <p style="font-size:0.85em; color:#666; margin:5px 0">Lewis et al. (2020) baseline</p>
                 <hr>
-                <h2 style="color:#e53e3e; margin:10px 0">67%</h2>
-                <p style="margin:0">Accuracy (4/6 test cases)</p>
+                <h2 style="color:#e53e3e; margin:10px 0">{_trad_acc}</h2>
+                <p style="margin:0">Accuracy ({_trad_ok}/{_n} test cases)</p>
                 <br>
-                <p><strong>1</strong> False Positive</p>
-                <p><strong>0</strong> Missing docs detected</p>
-                <p><strong>1.61s</strong> avg per query</p>
-                <p><strong>556</strong> avg tokens</p>
+                <p><strong>{_trad_fp}</strong> False Positive(s)</p>
+                <p><strong>{_trad_time:.2f}s</strong> avg per query</p>
+                <p><strong>{_trad_tok:.0f}</strong> avg tokens</p>
                 <p>❌ No HITL</p>
                 <p>❌ No evidence trail</p>
                 <p>❌ No anomaly logging</p>
@@ -728,23 +762,35 @@ with tab3:
             """, unsafe_allow_html=True)
 
         with col2:
-            st.markdown("""
+            _res = load_evaluation_results()
+            _m = binary_metrics(_res) if _res else None
+            # Like-for-like: the agentic verdicts on the SAME cases the baseline was run on
+            _agentic_by_po = {r['po_ref']: (not r['consistent']) for r in (_res or [])}
+            _h2h = [(r['ground_truth_anomaly'], _agentic_by_po.get(r['po_ref'])) for r in comp_results]
+            _h2h_n = len(_h2h)
+            _h2h_ok = sum(1 for gt, ag in _h2h if ag is not None and ag == gt)
+            _h2h_acc = f"{_h2h_ok / _h2h_n:.0%}" if _h2h_n else "n/a"
+            _acc20 = f"{_m['accuracy']:.0%} ({_m['tp'] + _m['tn']}/{_m['n']} sets)" if _m else "n/a"
+            _f1 = f"{_m['f1']:.3f}" if _m else "n/a"
+            _fp = _m['fp'] if _m else "n/a"
+            _prec = f"{_m['precision']:.0%}" if _m else "n/a"
+            st.markdown(f"""
             <div style="background:#f0fff4; border:2px solid #38a169;
                         padding:20px; border-radius:10px; text-align:center;">
                 <h3 style="color:#38a169; margin:0">Agentic RAG</h3>
                 <p style="font-size:0.85em; color:#666; margin:5px 0">This dissertation system</p>
                 <hr>
-                <h2 style="color:#38a169; margin:10px 0">95%</h2>
-                <p style="margin:0">Accuracy (19/20 sets) — F1: 0.974</p>
+                <h2 style="color:#38a169; margin:10px 0">{_h2h_acc}</h2>
+                <p style="margin:0">Accuracy ({_h2h_ok}/{_h2h_n} test cases, the same cases as the baseline)</p>
                 <br>
-                <p><strong>0</strong> False Positives — 100% Precision</p>
-                <p><strong>✅</strong> Missing docs detected</p>
-                <p><strong>~4.2s</strong> avg per query</p>
+                <p><strong>Full 20-set evaluation:</strong> {_acc20}, F1 {_f1}</p>
+                <p><strong>{_fp}</strong> False Positives — {_prec} Precision</p>
                 <p><strong>Higher</strong> tokens (multi-step)</p>
                 <p>✅ Dual HITL intervention</p>
                 <p>✅ Full evidence traceability</p>
                 <p>✅ Structured anomaly logging</p>
-                <p>✅ Grounded — no hallucination</p>
+                <p>✅ Answers cite retrieved evidence</p>
+                <p style="font-size:0.8em; color:#666; margin-top:12px">Six test cases are too few to support a significance claim; treat this comparison as indicative.</p>
             </div>
             """, unsafe_allow_html=True)
 
@@ -759,15 +805,8 @@ with tab3:
 
         st.markdown("<hr style='margin:5px 0'>", unsafe_allow_html=True)
 
-        # Agentic results from evaluation
-        agentic_results = {
-            "PO-2026-2001": True,
-            "PO-2026-2002": True,
-            "PO-2026-2004": True,
-            "PO-2026-1001": False,
-            "PO-2026-1002": False,
-            "PO-2026-2007": True,
-        }
+        # Agentic verdicts come from the evaluation results file (anomaly flagged = not consistent)
+        agentic_results = {r['po_ref']: (not r['consistent']) for r in load_evaluation_results()}
 
         for r in comp_results:
             po = r["po_ref"]
@@ -828,12 +867,12 @@ with tab3:
             three documents are present before comparison begins.
 
             ✅ **Grounded comparison**
-            compare_values tool compares actual extracted numbers
-            — no hallucination of values possible.
+            compare_values tool compares the extracted numbers
+            programmatically, rather than leaving the comparison to the model.
 
-            ✅ **100% precision**
-            Zero false positives across 20 document sets.
-            Every flagged anomaly is a genuine discrepancy.
+            ✅ **Precision is measured, not assumed**
+            Set-level precision is computed from the results file;
+            see the Evaluation Dashboard tab.
 
             ✅ **Complete audit trail**
             Every anomaly logged with source file, section,
@@ -998,15 +1037,9 @@ with tab5:
 
         #### Evaluation Results
 
-        | Metric | Value |
-        |--------|-------|
-        | Sets Evaluated | 20/20 |
-        | Precision | 100% |
-        | Recall | 95% |
-        | F1 Score | 0.974 |
-        | False Positives | 0 |
+        Computed from `results/evaluation_results_20sets.json` — see the Evaluation Dashboard tab.
 
-        #### Novel Contributions
+        #### Contributions
         1. Structure-aware chunking for logistics documents
         2. Cross-document agentic reasoning across PO/Invoice/DN
         3. Open-source implementation for SMEs

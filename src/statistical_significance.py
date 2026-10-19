@@ -21,27 +21,19 @@ from statsmodels.stats.proportion import proportion_confint
 # GROUND TRUTH AND PREDICTIONS
 # ============================================================
 
-# 20-set evaluation results
-# 1 = anomaly set, 0 = consistent/clean set
-ground_truth = [
-    0, 0, 0, 0, 0,   # Sets 01-05: clean
-    1, 1, 1,         # Sets 06-08: price mismatch
-    1, 1, 1,         # Sets 09-11: quantity mismatch
-    1, 1, 1,         # Sets 12-14: missing document
-    1, 1, 1,         # Sets 15-17: date inconsistency
-    1, 1, 1,         # Sets 18-20: multiple errors
-]
+# 20-set evaluation: ground truth and predictions are computed from the committed results file
+# (results/evaluation_results_20sets.json), not typed in. 1 = anomaly set, 0 = consistent set.
+import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from metrics_utils import labels_and_predictions, load_results
 
-# Agentic RAG predictions (1 = predicted anomaly, 0 = predicted consistent)
-agentic_predictions = [
-    0, 0, 0, 0, 0,   # Sets 01-05: correctly CONSISTENT
-    1, 1, 1,         # Sets 06-08: correctly ANOMALY
-    1, 1, 1,         # Sets 09-11: correctly ANOMALY
-    1, 1, 1,         # Sets 12-14: correctly ANOMALY
-    1, 1, 1,         # Sets 15-17: correctly ANOMALY
-    1, 1, 1,         # Sets 18-20: correctly ANOMALY
-]
+RESULTS_PATH = os.environ.get("EVAL_RESULTS", os.path.join("results", "evaluation_results_20sets.json"))
+_eval_results = load_results(RESULTS_PATH)
+ground_truth, agentic_predictions = labels_and_predictions(_eval_results)
 
+# Traditional RAG baseline: hand-recorded from the 6-case comparison run (n = 6).
+# Too small to support a significance claim; treat as indicative only.
 # Traditional RAG predictions (from comparison evaluation on 6 cases)
 # Mapped to same 20 sets (partial evaluation)
 # For McNemar's test we use the 6 directly compared cases
@@ -204,7 +196,7 @@ print(f"   Accuracy:  {acc_mean:.4f} (95% CI: [{acc_low:.4f}, {acc_high:.4f}])")
 print(f"\n3. WILSON SCORE CONFIDENCE INTERVALS (95% CI)")
 prec_w_low, prec_w_high = wilson_ci(metrics['tp'], metrics['tp'] + metrics['fp'])
 rec_w_low, rec_w_high = wilson_ci(metrics['tp'], metrics['tp'] + metrics['fn'])
-acc_w_low, acc_w_high = wilson_ci(metrics['tp'] + metrics['tn'], 20)
+acc_w_low, acc_w_high = wilson_ci(metrics['tp'] + metrics['tn'], len(ground_truth))
 
 print(f"   Precision: [{prec_w_low:.4f}, {prec_w_high:.4f}]")
 print(f"   Recall:    [{rec_w_low:.4f}, {rec_w_high:.4f}]")
@@ -267,14 +259,15 @@ results = {
         "significant": bool(pvalue < 0.05) if pvalue else False
     },
     "cohens_kappa": float(kappa),
-    "n_samples": 20,
+    "n_samples": int(len(ground_truth)),
     "n_bootstrap": 10000,
 }
 
-with open("vector_store/statistical_results.json", 'w') as f:
+os.makedirs("results", exist_ok=True)
+with open("results/statistical_results.json", 'w') as f:
     json.dump(results, f, indent=2)
 
-print(f"\nResults saved to vector_store/statistical_results.json")
+print(f"\nResults saved to results/statistical_results.json")
 print(f"\nFor dissertation reporting:")
 print(f"  F1 = {f1_mean:.3f} (95% CI: [{f1_low:.3f}, {f1_high:.3f}])")
 print(f"  Precision = {prec_mean:.3f} (95% CI: [{prec_low:.3f}, {prec_high:.3f}])")

@@ -1,0 +1,30 @@
+[
+  {
+    "anomaly_type": "price_mismatch",
+    "po_ref": "PO-2026-2001",
+    "document1": "PO-2026-2001.pdf",
+    "document2": "INV-MV-8102.pdf",
+    "field": "unit_price",
+    "value1": "42.00",
+    "value2": "46.50",
+    "impact": "\u00a3180.00 overcharge on 40 units",
+    "severity": "high",
+    "timestamp": "2026-08-21T12:34:11.353025",
+    "status": "pending_human_review",
+    "anomaly_id": "ANOM-0001"
+  },
+  {
+    "anomaly_type": "quantity_mismatch",
+    "po_ref": "PO-2026-2001",
+    "document1": "PO-2026-2001.pdf",
+    "document2": "DN-9921.pdf",
+    "field": "quantity",
+    "value1": "40",
+    "value2": "50",
+    "impact": "10 extra units delivered",
+    "severity": "medium",
+    "timestamp": "2026-08-21T12:34:18.450904",
+    "status": "pending_human_review",
+    "anomaly_id": "ANOM-0002"
+  }
+]
