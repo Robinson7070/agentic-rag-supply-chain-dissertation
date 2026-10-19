@@ -114,10 +114,11 @@ The metrics tabs read `results/*.json`. The live document-query features need th
 
 This is dissertation research code, shared for portfolio purposes. A conference paper based on the structure-aware chunking approach and the Hop Completeness metric is in preparation — implementation detail beyond what's described above is intentionally withheld pending submission.
 
-<!-- After the Zenodo release, add here:
 ## Cite this repository
-[![DOI](https://zenodo.org/badge/DOI/YOUR-DOI-HERE.svg)](https://doi.org/YOUR-DOI-HERE)
--->
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23473886.svg)](https://doi.org/10.5281/zenodo.23473886)
+
+Robinson, V. C. (2026). *Agentic RAG System for Automated Document Intelligence in Supply Chain Operations* (v1.0.0) [Software]. Zenodo. https://doi.org/10.5281/zenodo.23473886
 
 ## Author
 
